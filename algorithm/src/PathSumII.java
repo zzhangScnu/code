@@ -8,29 +8,7 @@ import java.util.Objects;
  * @author lihua
  * @since 2021/10/15
  */
-public class HasPathSumII {
-
-	public static class TreeNode {
-
-		int val;
-
-		TreeNode left;
-
-		TreeNode right;
-
-		TreeNode() {
-		}
-
-		TreeNode(int val) {
-			this.val = val;
-		}
-
-		TreeNode(int val, TreeNode left, TreeNode right) {
-			this.val = val;
-			this.left = left;
-			this.right = right;
-		}
-	}
+public class PathSumII {
 
 	/**
 	 * 写惯业务代码，第一次没反应过来可以用全局变量，避免当成参数传来传去
@@ -59,5 +37,27 @@ public class HasPathSumII {
 		doPathSum(root.right, newTargetSum);
 		// 回退到上一个状态，以便遍历其他分支
 		pathList.pollLast();
+	}
+
+	public static class TreeNode {
+
+		int val;
+
+		TreeNode left;
+
+		TreeNode right;
+
+		TreeNode() {
+		}
+
+		TreeNode(int val) {
+			this.val = val;
+		}
+
+		TreeNode(int val, TreeNode left, TreeNode right) {
+			this.val = val;
+			this.left = left;
+			this.right = right;
+		}
 	}
 }
