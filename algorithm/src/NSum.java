@@ -9,9 +9,6 @@ import java.util.List;
 public class NSum {
 
 	public static List<List<Integer>> fourSum(int[] nums, int target) {
-		if (nums.length < 4) {
-			return new ArrayList<>();
-		}
 		Arrays.sort(nums);
 		return nSum(nums, target, 0, 4);
 	}
@@ -23,25 +20,24 @@ public class NSum {
 	 * @param n      nSum的轮数
 	 */
 	private static List<List<Integer>> nSum(int[] nums, int target, int from, int n) {
+		List<List<Integer>> resultList = new ArrayList<>();
+		int length = nums.length;
+		if (n < 2 || length < n) {
+			return resultList;
+		}
 		if (n == 2) {
 			return twoSum(nums, from, target);
 		}
-		int length = nums.length;
-		List<List<Integer>> resultList = new ArrayList<>();
 		for (int first = from; first < length; first++) {
-			// 防止出现重复元组
-			while (first != from && first < length - 1 && nums[first] == nums[first - 1]) {
-				first++;
-			}
-			// 如果检查到最后，都没有符合条件的元素，就跳过这一轮了
-			if (first == length - 1) {
-				continue;
-			}
 			int firstNum = nums[first];
 			int newTarget = target - firstNum;
 			nSum(nums, newTarget, first + 1, n - 1).stream()
 					.peek(result -> result.add(firstNum))
 					.forEach(resultList::add);
+			// 防止出现重复元组
+			while (first < length - 1 && nums[first] == nums[first + 1]) {
+				first++;
+			}
 		}
 		return resultList;
 	}
@@ -51,30 +47,30 @@ public class NSum {
 	 */
 	private static List<List<Integer>> twoSum(int[] nums, int from, int target) {
 		List<List<Integer>> resultList = new ArrayList<>();
-		int length = nums.length;
 		int low = from;
-		int high = length - 1;
+		int high = nums.length - 1;
 		while (low < high) {
-			if (nums[low] + nums[high] > target) {
+			int lowNum = nums[low];
+			int highNum = nums[high];
+			int sum = lowNum + highNum;
+			if (sum > target) {
 				high--;
-				// 要注意界限校验，而且这个界限是以另外一个指针做标准的，不是数组上下界
-				while (high - 1 > low && nums[high] == nums[high - 1]) {
-					high--;
-				}
 			}
-			if (nums[low] + nums[high] < target) {
+			if (sum < target) {
 				low++;
-				while (low + 1 < high && nums[low] == nums[low + 1]) {
-					low++;
-				}
 			}
-			if (low < high && nums[low] + nums[high] == target) {
+			if (sum == target) {
 				List<Integer> result = new ArrayList<>();
 				result.add(nums[low]);
 				result.add(nums[high]);
 				resultList.add(result);
-				low++;
-				high--;
+				// 注意界限校验，跳过重复元素
+				while (low < high && nums[low] == lowNum) {
+					low++;
+				}
+				while (low < high && nums[high] == highNum) {
+					high--;
+				}
 			}
 		}
 		return resultList;
