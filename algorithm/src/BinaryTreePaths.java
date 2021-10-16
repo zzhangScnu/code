@@ -1,3 +1,5 @@
+import structure.TreeNode;
+
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -31,7 +33,6 @@ import java.util.stream.Collectors;
 //
 // 树中节点的数目在范围 [1, 100] 内
 // -100 <= Node.val <= 100
-
 /**
  * @author lihua
  * @since 2021/10/16
@@ -70,27 +71,5 @@ public class BinaryTreePaths {
                         .map(String::valueOf)
                         .collect(Collectors.joining("->")))
                 .collect(Collectors.toList());
-    }
-
-    public static class TreeNode {
-
-        int val;
-
-        TreeNode left;
-
-        TreeNode right;
-
-        TreeNode() {
-        }
-
-        TreeNode(int val) {
-            this.val = val;
-        }
-
-        TreeNode(int val, TreeNode left, TreeNode right) {
-            this.val = val;
-            this.left = left;
-            this.right = right;
-        }
     }
 }

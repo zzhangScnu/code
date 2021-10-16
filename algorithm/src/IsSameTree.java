@@ -39,6 +39,8 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 
+import structure.TreeNode;
+
 import java.util.Objects;
 
 /**
@@ -46,25 +48,6 @@ import java.util.Objects;
  * @since 2021/10/16
  */
 public class IsSameTree {
-
-    public class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-
-        TreeNode() {
-        }
-
-        TreeNode(int val) {
-            this.val = val;
-        }
-
-        TreeNode(int val, TreeNode left, TreeNode right) {
-            this.val = val;
-            this.left = left;
-            this.right = right;
-        }
-    }
 
     public boolean isSameTree(TreeNode p, TreeNode q) {
         // 只有一个收束条件

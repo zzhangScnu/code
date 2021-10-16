@@ -28,6 +28,8 @@
 //
 // 你可以运用递归和迭代两种方法解决这个问题吗？
 
+import structure.TreeNode;
+
 import java.util.Objects;
 
 /**
@@ -53,26 +55,5 @@ public class IsSymmetric {
         return p.val == q.val
                 && isSymmetric(p.left, q.right)
                 && isSymmetric(p.right, q.left);
-    }
-
-    public static class TreeNode {
-        int val;
-
-        TreeNode left;
-
-        TreeNode right;
-
-        TreeNode() {
-        }
-
-        TreeNode(int val) {
-            this.val = val;
-        }
-
-        TreeNode(int val, TreeNode left, TreeNode right) {
-            this.val = val;
-            this.left = left;
-            this.right = right;
-        }
     }
 }
