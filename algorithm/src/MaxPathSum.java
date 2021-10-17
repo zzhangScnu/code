@@ -51,15 +51,15 @@ public class MaxPathSum {
         return maxSum;
     }
 
-    private int doMaxPathSum(TreeNode root) {
-        if (Objects.isNull(root)) {
+    private int doMaxPathSum(TreeNode p) {
+        if (Objects.isNull(p)) {
             return 0;
         }
         // 如果有子树最大路径和小于0的，就不要算到总的最大路径和里面去了
-        int left = Math.max(0, doMaxPathSum(root.left));
-        int right = Math.max(0, doMaxPathSum(root.right));
-        maxSum = Math.max(maxSum, root.val + left + right);
+        int left = Math.max(0, doMaxPathSum(p.left));
+        int right = Math.max(0, doMaxPathSum(p.right));
+        maxSum = Math.max(maxSum, p.val + left + right);
         // 继续往下找，可能会有更长的路径存在
-        return Math.max(root.val + left, root.val + right);
+        return Math.max(p.val + left, p.val + right);
     }
 }
