@@ -27,6 +27,9 @@
 //
 // Related Topics 数组 哈希表 前缀和
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author lihua
  * @since 2021/10/18
@@ -47,14 +50,17 @@ public class SubarraySum {
 		for (int i = 1; i < length; i++) {
 			sums[i] = sums[i - 1] + nums[i];
 		}
-		int arrSum;
+		// 前缀和 -> 出现次数
+		Map<Integer, Integer> sumMap = new HashMap<>();
+		// 刚好是前n位，没有前缀和的情况，比如[1, 1, 1, 2], k = 3
+		sumMap.put(0, 1);
+		int sum;
 		for (int i = 0; i < length; i++) {
-			for (int j = -1; j < i; j++) {
-				arrSum = j < 0 ? sums[i] : sums[i] - sums[j];
-				if (arrSum == k) {
-					count++;
-				}
+			sum = sums[i] - k;
+			if (sumMap.containsKey(sum)) {
+				count += sumMap.get(sum);
 			}
+			sumMap.put(sums[i], sumMap.getOrDefault(sums[i], 0) + 1);
 		}
 		return count;
 	}
