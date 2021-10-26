@@ -63,63 +63,42 @@ import java.util.Queue;
  */
 public class MyStack {
 
-    private Queue<Integer> queue1;
+    private Queue<Integer> queue;
 
-    private Queue<Integer> queue2;
+    private int top;
 
     public MyStack() {
-        queue1 = new LinkedList<>();
-        queue2 = new LinkedList<>();
+        queue = new LinkedList<>();
     }
 
     public void push(int x) {
-        if (queue1.size() < queue2.size()) {
-            queue2.add(x);
-        } else {
-            queue1.add(x);
-        }
+        queue.add(x);
+        top = x;
     }
 
     public int pop() {
-        if (queue1.size() == 1) {
-            return queue1.remove();
+        int size = queue.size();
+        if (size == 1) {
+            top = 0;
+            return queue.remove();
         }
-        if (queue2.size() == 1) {
-            return queue2.remove();
+        // 2的原因是，需要记录pop之后的下一个栈顶元素
+        while (size > 2) {
+            // 将队头的元素一一加到队尾去，实现倒序
+            queue.add(queue.remove());
+            size--;
         }
-        if (queue1.size() < queue2.size()) {
-            while (queue1.size() > 1) {
-                queue2.add(queue1.remove());
-            }
-            return queue1.remove();
-        }
-        while (queue2.size() > 1) {
-            queue1.add(queue2.remove());
-        }
-        return queue2.remove();
+        top = queue.peek();
+        queue.add(queue.remove());
+        return queue.remove();
     }
 
     public int top() {
-        if (queue1.size() == 1) {
-            return queue1.peek();
-        }
-        if (queue2.size() == 1) {
-            return queue2.peek();
-        }
-        if (queue1.size() < queue2.size()) {
-            while (queue1.size() > 1) {
-                queue2.add(queue1.remove());
-            }
-            return queue1.peek();
-        }
-        while (queue2.size() > 1) {
-            queue1.add(queue2.remove());
-        }
-        return queue2.peek();
+        return top;
     }
 
     public boolean empty() {
-        return queue1.isEmpty() && queue2.isEmpty();
+        return queue.isEmpty();
     }
 
     public static void main(String[] args) {
@@ -127,8 +106,10 @@ public class MyStack {
         stack.push(1);
         stack.push(2);
         int top = stack.top();
+        assert top == 2;
         int pop = stack.pop();
+        assert pop == 2;
         boolean empty = stack.empty();
-        System.out.println("");
+        assert !empty;
     }
 }
