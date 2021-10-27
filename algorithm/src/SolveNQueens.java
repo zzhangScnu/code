@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 //n 皇后问题 研究的是如何将 n 个皇后放置在 n×n 的棋盘上，并且使皇后彼此之间不能相互攻击。
 //
 // 给你一个整数 n ，返回所有不同的 n 皇后问题 的解决方案。
@@ -55,8 +54,7 @@ public class SolveNQueens {
     public List<List<String>> solveNQueens(int n) {
         length = n;
         int[][] playground = initialPlayground(n);
-        List<List<String>> track = new ArrayList<>();
-        backtrack(playground, track);
+        backtrack(playground, 0);
         return resultList;
     }
 
@@ -73,51 +71,50 @@ public class SolveNQueens {
         return playground;
     }
 
-    private void backtrack(int[][] playground, List<List<String>> track) {
-        if (track.size() == length) {
-            resultList.add(convert(track));
+    private void backtrack(int[][] playground, int row) {
+        if (row == length) {
+            resultList.add(convert(playground));
             return;
         }
+        for (int col = 0; col < length; col++) {
+            if (!isValid(playground, row, col)) {
+                continue;
+            }
+            playground[row][col] = 1;
+            backtrack(playground, row + 1);
+            playground[row][col] = 0;
+        }
+    }
+
+    private List<String> convert(int[][] playground) {
+        List<String> situation = new ArrayList<>();
+        StringBuilder row;
         for (int i = 0; i < length; i++) {
+            row = new StringBuilder();
             for (int j = 0; j < length; j++) {
-                if (!isValid(playground, i, j)) {
-                    continue;
-                }
-                if (track.size() < i + 1) {
-                    List<String> row = new ArrayList<>();
-                    for (int k = 0; k < length; k++) {
-                        row.add(N);
-                    }
-                    track.add(row);
-                }
-                track.get(i).set(j, QUEEN);
-                playground[i][j] = 1;
-                backtrack(playground, track);
-                track.get(i).set(j, N);
-                playground[i][j] = 0;
+                row.append(playground[i][j] == 1 ? QUEEN : N);
             }
+            situation.add(row.toString());
         }
+        return situation;
     }
 
-    private List<String> convert(List<List<String>> track) {
-        return track.stream()
-                .map(row -> String.join("", row))
-                .collect(Collectors.toList());
-    }
-
-    private boolean isValid(int[][] playground, int i, int j) {
+    private boolean isValid(int[][] playground, int row, int col) {
+        // 检查列是否有冲突
         for (int k = 0; k < length; k++) {
-            if (playground[i][k] == 1 || playground[k][j] == 1) {
+            if (playground[k][col] == 1) {
                 return false;
             }
         }
-        for (int m = 0, n = 0; m < length; m++, n++) {
-            if (playground[m][n] == 1) {
+        // 检查右上方是否有冲突
+        for (int i = row - 1, j = col + 1; i >= 0 && j < length; i--, j++) {
+            if (playground[i][j] == 1) {
                 return false;
             }
         }
-        for (int m = 0, n = length - 1; m < length; m++, n--) {
-            if (playground[m][n] == 1) {
+        // 检查左上方是否有冲突
+        for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
+            if (playground[i][j] == 1) {
                 return false;
             }
         }
