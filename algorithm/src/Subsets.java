@@ -1,8 +1,6 @@
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author lihua
@@ -10,29 +8,26 @@ import java.util.Set;
  */
 public class Subsets {
 
-    private Set<List<Integer>> resultList = new HashSet<>();
+    private List<List<Integer>> resultList = new ArrayList<>();
 
     public List<List<Integer>> subsets(int[] nums) {
         LinkedList<Integer> track = new LinkedList<>();
-        resultList.add(new LinkedList<>());
-        backtrack(nums, track);
-        return new ArrayList<>(resultList);
+        backtrack(nums, 0, track);
+        return resultList;
     }
 
-    private void backtrack(int[] nums, LinkedList<Integer> track) {
-        if (nums.length == track.size()) {
+    private void backtrack(int[] nums, int index, LinkedList<Integer> track) {
+        // 遍历完整个数组之后，就可以将路径放进结果集了
+        if (index == nums.length) {
+            resultList.add(new LinkedList<>(track));
             return;
         }
-        for (int i = 0; i < nums.length; i++) {
-            if (track.contains(nums[i])) {
-                // 由于不能有重复元素，已加入的就不能再选择了
-                continue;
-            }
-            track.add(nums[i]);
-            backtrack(nums, track);
-            resultList.add(new LinkedList<>(track));
-            track.removeLast();
-        }
+        // 选择index所在位置的元素的情况
+        track.add(nums[index]);
+        backtrack(nums, index + 1, track);
+        track.removeLast();
+        // 不选择index所在位置的元素的情况
+        backtrack(nums, index + 1, track);
     }
 
     public static void main(String[] args) {
