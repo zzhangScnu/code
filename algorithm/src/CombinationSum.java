@@ -54,6 +54,7 @@
 // Related Topics 数组 回溯
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -66,46 +67,35 @@ public class CombinationSum {
     private List<List<Integer>> resultList = new ArrayList<>();
 
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
-        // 最多有原始集合这么多的组合
-        List<LinkedList<Integer>> buckets = initialBuckets(candidates);
-        backtrack(candidates, target, buckets, 0);
+        // 保证元素递增，可重复使用的元素也是相邻排列
+        Arrays.sort(candidates);
+        if (candidates[0] > target) {
+            return resultList;
+        }
+        LinkedList<Integer> track = new LinkedList<>();
+        backtrack(candidates, target, 0, track);
         return resultList;
     }
 
-    private List<LinkedList<Integer>> initialBuckets(int[] candidates) {
-        List<LinkedList<Integer>> buckets = new ArrayList<>();
-        for (int i = 0; i < candidates.length; i++) {
-            buckets.add(new LinkedList<>());
-        }
-        return buckets;
-    }
-
-    private void backtrack(int[] candidates, int target, List<LinkedList<Integer>> buckets, int candidateIndex) {
+    /**
+     * target是减去当前选择元素的，这样就不用多一个数据结构保存当前各桶状况
+     */
+    private void backtrack(int[] candidates, int target, int beginIndex, LinkedList<Integer> track) {
         // 遍历完所有可选择的数了
-        if (candidateIndex == candidates.length) {
-            for (List<Integer> bucket : buckets) {
-                if (sum(bucket) == target) {
-                    resultList.add(new ArrayList<>(bucket));
-                }
-            }
+        if (target == 0) {
+            resultList.add(new ArrayList<>(track));
             return;
         }
-        for (int i = candidateIndex; i < buckets.size(); i++) {
-            if (sum(buckets.get(i)) + candidates[candidateIndex] > target) {
+        // 元素可以重复使用，所以每次循环都是从上次用过的位置开始
+        for (int i = beginIndex; i < candidates.length; i++) {
+            if (target - candidates[i] < 0) {
+                // 该位置的元素都已经不符合条件了，后面递增的元素也就不用判断了
                 return;
             }
-            buckets.get(i).add(candidates[candidateIndex]);
-            backtrack(candidates, target, buckets, candidateIndex + 1);
-            buckets.get(i).removeLast();
+            track.add(candidates[i]);
+            backtrack(candidates, target - candidates[i], i, track);
+            track.removeLast();
         }
-    }
-
-    private int sum(List<Integer> bucket) {
-        int sum = 0;
-        for (Integer num : bucket) {
-            sum += num;
-        }
-        return sum;
     }
 
     public static void main(String[] args) {
