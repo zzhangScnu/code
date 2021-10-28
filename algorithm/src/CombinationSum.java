@@ -81,7 +81,7 @@ public class CombinationSum {
      * target是减去当前选择元素的，这样就不用多一个数据结构保存当前各桶状况
      */
     private void backtrack(int[] candidates, int target, int beginIndex, LinkedList<Integer> track) {
-        // 遍历完所有可选择的数了
+        // 已经获得想要的子集了
         if (target == 0) {
             resultList.add(new ArrayList<>(track));
             return;
