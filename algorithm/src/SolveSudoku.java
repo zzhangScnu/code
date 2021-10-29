@@ -55,34 +55,36 @@
 public class SolveSudoku {
 
     public void solveSudoku(char[][] board) {
-        backtrack(board);
+        backtrack(board, 0, 0);
     }
 
-    private boolean backtrack(char[][] board) {
-        for (int row = 0; row < 9; row++) {
-            for (int col = 0; col < 9; col++) {
-                // 如果原本已经有数字了，就跳过这次放置
-                if (board[row][col] != '.') {
-                    continue;
-                }
-                // 在固定某行某列的情况下，穷举所有可以放置的数字
-                for (char num = '1'; num <= '9'; num++) {
-                    if (!isValid(board, row, col, num)) {
-                        continue;
-                    }
-                    board[row][col] = num;
-                    if (backtrack(board)) {
-                        // 只要找到一种放置的可能性，马上返回true
-                        return true;
-                    }
-                    board[row][col] = '.';
-                }
-                // 这个位置的九个数字遍历完都没有return，说明没有可能了，返回false。这也是没有base case也能终止递归的原因
-                return false;
-            }
+    private boolean backtrack(char[][] board, int row, int col) {
+        // 行遍历完了，证明整个棋盘都遍历完了，在这之前没有返回false，证明有了一种可能的解法
+        if (row == 9) {
+            return true;
         }
-        // 遍历完所有位置，没有返回false，表示有一种合适的摆放位置
-        return true;
+        // 列遍历完了，该遍历下一行了
+        if (col == 9) {
+            return backtrack(board, row + 1, 0);
+        }
+        // 如果原本已经有数字了，就跳过这次放置，直接下一列
+        if (board[row][col] != '.') {
+            return backtrack(board, row, col + 1);
+        }
+        // 在固定某行某列的情况下，穷举所有可以放置的数字
+        for (char num = '1'; num <= '9'; num++) {
+            if (!isValid(board, row, col, num)) {
+                continue;
+            }
+            board[row][col] = num;
+            if (backtrack(board, row, col + 1)) {
+                // 只要找到一种放置的可能性，马上返回true，否则，试试下一个数字
+                return true;
+            }
+            board[row][col] = '.';
+        }
+        // 这个位置的九个数字遍历完都没有return，说明没有可能了，返回false
+        return false;
     }
 
     private boolean isValid(char[][] board, int row, int col, int num) {
