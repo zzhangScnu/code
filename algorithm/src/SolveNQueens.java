@@ -53,22 +53,9 @@ public class SolveNQueens {
 
     public List<List<String>> solveNQueens(int n) {
         length = n;
-        int[][] playground = initialPlayground(n);
+        int[][] playground = new int[n][n];
         backtrack(playground, 0);
         return resultList;
-    }
-
-    /**
-     * playground[i][j]为1时，表示放置了皇后
-     */
-    private int[][] initialPlayground(int n) {
-        int[][] playground = new int[n][n];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                playground[i][j] = 0;
-            }
-        }
-        return playground;
     }
 
     private void backtrack(int[][] playground, int row) {
