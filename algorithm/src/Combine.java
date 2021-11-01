@@ -46,22 +46,32 @@ public class Combine {
     private List<List<Integer>> resultList = new ArrayList<>();
 
     public List<List<Integer>> combine(int n, int k) {
+        if (n < k) {
+            return resultList;
+        }
         LinkedList<Integer> track = new LinkedList<>();
-        backtrack(track, n, k);
+        backtrack(track, 1, n, k);
         return resultList;
     }
 
-    private void backtrack(LinkedList<Integer> track, int n, int k) {
+    private void backtrack(LinkedList<Integer> track, int num, int n, int k) {
+        // 还需n个元素 > 候选数组中后面还剩下的元素，此时元组里怎样都凑不齐k个元素了
+        // 其实这里放到循环体里面更好，少了入栈出栈过程
+        // if (k - track.size() > n - num + 1) {
+        //     return;
+        // }
         if (track.size() == k) {
             resultList.add(new ArrayList<>(track));
             return;
         }
-        for (int i = 1; i <= n; i++) {
-            if (track.isEmpty() || track.getLast() < i) {
-                track.add(i);
-                backtrack(track, n, k);
-                track.removeLast();
-            }
+        // 表示在i到上界区间中选取一个合适的数字（上界从n变成了剪枝条件的移项）
+        for (int i = num; i <= n - k + track.size() + 1; i++) {
+            track.add(i);
+            // System.out.println("递归前： " + track);
+            // num是i+1，不是num+1，多注意细节问题……
+            backtrack(track, i + 1, n, k);
+            track.removeLast();
+            // System.out.println("递归后： " + track);
         }
     }
 
