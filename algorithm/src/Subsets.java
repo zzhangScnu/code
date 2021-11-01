@@ -50,7 +50,8 @@ public class Subsets {
         resultList.add(new LinkedList<>(track));
         for (int i = index; i < nums.length; i++) {
             track.add(nums[i]);
-            backtrack(nums, index + 1, track);
+            // i + 1，不是index + 1，要取后面递增的数字，入参的index是动态变化的。注意细节！
+            backtrack(nums, i + 1, track);
             track.removeLast();
         }
     }
