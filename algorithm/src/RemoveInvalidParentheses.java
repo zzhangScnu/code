@@ -37,8 +37,6 @@
 // Related Topics 广度优先搜索 字符串 回溯
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -47,40 +45,75 @@ import java.util.List;
  */
 public class RemoveInvalidParentheses {
 
-    private int maxSize = 0;
+    private int removeLeft = 0;
 
-    private HashSet<String> resultSet = new HashSet<>();
+    private int removeRight = 0;
+
+    private List<String> resultList = new ArrayList<>();
 
     public List<String> removeInvalidParentheses(String s) {
-        LinkedList<String> track = new LinkedList<>();
-        backtrack(s, track, 0);
-        return new ArrayList<>(resultSet);
+        countRemove(s);
+        backtrack(s, removeLeft, removeRight, 0);
+        return resultList;
     }
 
-    private void backtrack(String s, LinkedList<String> track, int index) {
-        if (index == s.length()) {
-            if (isValid(track) && track.size() >= maxSize) {
-                maxSize = track.size();
-                resultSet.add(String.join("", track));
+    /**
+     * 计算左 / 右括号最少应该删除的数量
+     */
+    private void countRemove(String s) {
+        int length = s.length();
+        for (int i = 0; i < length; i++) {
+            char ch = s.charAt(i);
+            if (ch == '(') {
+                removeLeft++;
+            } else if (ch == ')') {
+                if (removeLeft > 0) {
+                    removeLeft--;
+                } else {
+                    removeRight++;
+                }
+            }
+        }
+    }
+
+    /**
+     * start存在的意义是去重
+     */
+    private void backtrack(String s, int left, int right, int start) {
+        if (left == 0 && right == 0) {
+            if (isValid(s)) {
+                resultList.add(String.join("", s));
             }
             return;
         }
-        char ch = s.charAt(index);
-        track.add(Character.toString(ch));
-        backtrack(s, track, index + 1);
-        track.removeLast();
-        backtrack(s, track, index + 1);
+        int length = s.length();
+        for (int i = start; i < length; i++) {
+            // 重复的左 / 右括号，无论删哪个都是一样的，所以跳过重复的，删掉一个就进入下一层搜索
+            if (i != start && s.charAt(i) == s.charAt(i - 1)) {
+                continue;
+            }
+            char ch = s.charAt(i);
+            // 尝试去掉这个左括号
+            if (ch == '(' && removeLeft > 0) {
+                backtrack(s.substring(0, i) + s.substring(i + 1), left - 1, right, i);
+            } else if (ch == ')' && removeRight > 0) {
+                backtrack(s.substring(0, i) + s.substring(i + 1), left, right - 1, i);
+            }
+        }
     }
 
-    private boolean isValid(LinkedList<String> track) {
+    private boolean isValid(String s) {
         int balance = 0;
-        for (String str : track) {
-            if (")".equals(str)) {
+        int length = s.length();
+        char ch;
+        for (int i = 0; i < length; i++) {
+            ch = s.charAt(i);
+            if (ch == ')') {
                 balance--;
                 if (balance < 0) {
                     return false;
                 }
-            } else if ("(".equals(str)) {
+            } else if (ch == '(') {
                 balance++;
             }
         }
@@ -95,7 +128,7 @@ public class RemoveInvalidParentheses {
         assert resultList.size() == 2;
         resultList = new RemoveInvalidParentheses().removeInvalidParentheses(")(");
         assert resultList.size() == 1;
-        resultList = new RemoveInvalidParentheses().removeInvalidParentheses(")(f");
+        resultList = new RemoveInvalidParentheses().removeInvalidParentheses("((((((((((((((((((((aaaaa");
         assert resultList.size() == 1;
     }
 }
