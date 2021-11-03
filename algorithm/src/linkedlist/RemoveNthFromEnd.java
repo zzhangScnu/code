@@ -54,14 +54,13 @@ import structure.ListNode;
 public class RemoveNthFromEnd {
 
     public ListNode removeNthFromEnd(ListNode head, int n) {
-        ListNode slow = head;
+        // 增加虚拟头结点。因为slow指向的是要删除结点的前置结点
+        // 这样如果要删除头结点的话就不需要特殊判断了
+        ListNode dummyHead = new ListNode(0, head);
+        ListNode slow = dummyHead;
         ListNode fast = head;
         int k = 0;
-        // 让fast多走了一步，这样slow能停在倒数第k个结点的前置结点
-        while (k <= n) {
-            if (fast == null) {
-                return slow.next;
-            }
+        while (k < n) {
             fast = fast.next;
             k++;
         }
@@ -69,11 +68,9 @@ public class RemoveNthFromEnd {
             slow = slow.next;
             fast = fast.next;
         }
-        if (slow.next == null) {
-            return null;
-        }
         // slow最终停下的就是倒数第k-1个结点
         slow.next = slow.next.next;
-        return head;
+        // 注意这里是虚拟头结点的下一个结点，也就是真正的头结点
+        return dummyHead.next;
     }
 }
