@@ -42,46 +42,24 @@ package array;
 public class ReverseStr {
 
     public String reverseStr(String s, int k) {
-        // 数k个，反转；再k个，不反转；循环直到字符串结束
         char[] chars = s.toCharArray();
-        int length = chars.length;
-        char temp;
-        if (k > length) {
-            int left = 0;
-            int right = length - 1;
-            while (left < right) {
-                temp = chars[left];
-                chars[left] = chars[right];
-                chars[right] = temp;
-                left++;
-                right--;
-            }
-            return new String(chars);
-        }
-        int left = 0;
-        int right = 0;
-        int parity = 0;
-        for (int i = 0; i < length; i++) {
-            if ((right + 1) % k != 0) {
-                right++;
-                continue;
-            }
-            if (parity == 0) {
-                while (left < right) {
-                    temp = chars[left];
-                    chars[left] = chars[right];
-                    chars[right] = temp;
-                    left++;
-                    right--;
-                }
-                parity = 1;
-            } else {
-                parity = 0;
-            }
-            left = i + 1;
-            right = i + 1;
+        int length = s.length();
+        for (int i = 0; i < length; i += 2 * k) {
+            // right的取值，满足了题意
+            revert(chars, i, Math.min(i + k, length) - 1);
         }
         return new String(chars);
+    }
+
+    private void revert(char[] chars, int left, int right) {
+        char temp;
+        while (left < right) {
+            temp = chars[left];
+            chars[left] = chars[right];
+            chars[right] = temp;
+            left++;
+            right--;
+        }
     }
 
     public static void main(String[] args) {
