@@ -53,8 +53,6 @@ public class CheckInclusion {
         int left = 0;
         int right = 0;
         int valid = 0;
-        int start = 0;
-        int minLength = Integer.MAX_VALUE;
         char cur;
         while (right < length) {
             cur = chars[right];
@@ -65,10 +63,11 @@ public class CheckInclusion {
                 }
             }
             right++;
-            while (valid == need.size()) {
-                if (minLength > right - left) {
-                    minLength = right - left;
-                    start = left;
+            // 将滑动窗口区间固定在s1的长度
+            while (right - left >= s1.length()) {
+                // 如果此时滑动窗口中已经满足need的条件，就表示已经包含了s1的排列，返回true
+                if (valid == need.size()) {
+                    return true;
                 }
                 cur = chars[left];
                 if (need.containsKey(cur)) {
@@ -80,11 +79,7 @@ public class CheckInclusion {
                 left++;
             }
         }
-        if (minLength == Integer.MAX_VALUE) {
-            return false;
-        }
-        String res = s2.substring(start, start + minLength);
-        return res.length() == s1.length();
+        return false;
     }
 
     private Map<Character, Integer> initialNeed(String s1) {
@@ -99,6 +94,6 @@ public class CheckInclusion {
     public static void main(String[] args) {
         CheckInclusion checkInclusion = new CheckInclusion();
         boolean flag = checkInclusion.checkInclusion("ab", "eidboaoo");
-        assert flag;
+        assert !flag;
     }
 }
