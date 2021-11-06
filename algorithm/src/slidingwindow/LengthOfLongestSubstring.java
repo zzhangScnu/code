@@ -47,6 +47,9 @@ package slidingwindow;
 //
 // Related Topics 哈希表 字符串 滑动窗口
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author lihua
  * @since 2021/11/6
@@ -55,17 +58,17 @@ public class LengthOfLongestSubstring {
 
     public int lengthOfLongestSubstring(String s) {
         int l = 0, r = 0;
-        int[] window = new int[128];
+        Map<Character, Integer> window = new HashMap<>();
         int length = s.length();
         int maxLength = 0;
         while (r < length) {
-            int rCur = s.charAt(r) - 'a';
-            window[rCur]++;
+            char rCur = s.charAt(r);
+            window.put(rCur, window.getOrDefault(rCur, 0) + 1);
             r++;
             // 如果此时滑动窗口中有重复值了，就不断移动左指针，直到不再有重复
-            while (window[rCur] > 1) {
-                int lCur = s.charAt(l) - 'a';
-                window[lCur]--;
+            while (window.get(rCur) > 1) {
+                char lCur = s.charAt(l);
+                window.put(lCur, window.getOrDefault(lCur, 0) - 1);
                 l++;
             }
             // 不再重复后，试图更新结果
