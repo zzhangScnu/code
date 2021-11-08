@@ -66,6 +66,7 @@ public class LengthOfLongestSubstring {
             window.put(rCur, window.getOrDefault(rCur, 0) + 1);
             r++;
             // 如果此时滑动窗口中有重复值了，就不断移动左指针，直到不再有重复
+            // 窗口长度可变时，如果窗口不合法的话，需要不断收缩上界，直到再次合法
             while (window.get(rCur) > 1) {
                 char lCur = s.charAt(l);
                 window.put(lCur, window.getOrDefault(lCur, 0) - 1);
