@@ -67,26 +67,16 @@ public class RemoveElement {
 
     public int removeElement(int[] nums, int val) {
         int length = nums.length;
-        int left = 0, right = length - 1;
-        // 如果遇到目标元素，就移动到最后去
-        // 这种做法，解决不了数组中全是目标值的情况
-        while (left < length) {
-            if (left < right && nums[left] == val) {
-                while (nums[right] == val) {
-                    right--;
-                }
-                swap(nums, left, right);
-                right--;
+        int left = 0, right = 0;
+        while (right < length) {
+            if (nums[right] != val) {
+                nums[left] = nums[right];
+                // 这里是后++的，所以最后left是数组末尾索引+1，直接返回就行
+                left++;
             }
-            left++;
+            right++;
         }
-        return right + 1;
-    }
-
-    private void swap(int[] nums, int i, int j) {
-        int temp = nums[i];
-        nums[i] = nums[j];
-        nums[j] = temp;
+        return left;
     }
 
     public static void main(String[] args) {
@@ -94,7 +84,6 @@ public class RemoveElement {
         int[] nums = new int[]{1, 1};
         int val = 1;
         int result = clazz.removeElement(nums, val);
-        // failed!
         assert result == 0;
     }
 }
