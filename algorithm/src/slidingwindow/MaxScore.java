@@ -68,27 +68,32 @@ public class MaxScore {
         int score = 0, minScore = Integer.MAX_VALUE;
         int length = cardPoints.length;
         int windowLength = length - k;
-        int leftThreshold = 0, rightThreshold = 0;
+        // 如果滑动窗口的长度计算为0，表示没有选择，只能全选的情况
+        if (windowLength == 0) {
+            return sum(cardPoints);
+        }
+        // 其实就是要求滑动窗口是最小点数的情况
         while (right < length) {
             score += cardPoints[right];
             right++;
             if (right - left + 1 > windowLength) {
-                if (score - cardPoints[left] < minScore) {
-                    minScore = score - cardPoints[left];
-                    leftThreshold = left;
-                    rightThreshold = right;
+                if (score < minScore) {
+                    minScore = score;
                 }
+                score -= cardPoints[left];
                 left++;
             }
         }
-        int maxScore = 0;
-        for (int i = 0; i < leftThreshold; i++) {
-            maxScore += cardPoints[i];
+        int sum = sum(cardPoints);
+        return sum - minScore;
+    }
+
+    private int sum(int[] cardPoints) {
+        int sum = 0;
+        for (int cardPoint : cardPoints) {
+            sum += cardPoint;
         }
-        for (int i = rightThreshold; i < length; i++) {
-            maxScore += cardPoints[i];
-        }
-        return maxScore;
+        return sum;
     }
 
     public static void main(String[] args) {
