@@ -32,9 +32,9 @@ package array;
 //
 // Related Topics 数组 排序
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.Comparator;
+import java.util.LinkedList;
 
 /**
  * @author lihua
@@ -44,48 +44,42 @@ public class Merge {
 
     public int[][] merge(int[][] intervals) {
         sort(intervals);
-        int left = intervals[0][0];
-        int right = intervals[0][1];
         int length = intervals.length;
-        List<int[]> res = new ArrayList<>();
-        for (int i = 0; i <= length; i++) {
-            // 如果已经遍历完了，就把最后一段也加到结果集里
-            if (i == length) {
-                res.add(new int[]{left, right});
-                break;
-            }
-            if (intervals[i][0] >= left && intervals[i][1] <= right) {
-                // 覆盖，啥也不干
-            } else if (intervals[i][0] <= right && intervals[i][1] > right) {
-                // 相交
-                right = intervals[i][1];
-            } else if (intervals[i][0] > right) {
-                // 不相交。这时候记录结果，然后用下一个区间继续去合并之后的
-                res.add(new int[]{left, right});
-                left = intervals[i][0];
-                right = intervals[i][1];
+        LinkedList<int[]> res = new LinkedList<>();
+        res.add(intervals[0]);
+        int[] last;
+        int[] cur;
+        for (int i = 1; i < length; i++) {
+            last = res.getLast();
+            cur = intervals[i];
+            // 两个区间有相交/覆盖，这时候取end的最大值
+            if (cur[0] <= last[1]) {
+                last[1] = Math.max(last[1], cur[1]);
+            } else {
+                // 否则不相交，将当前区间记录到结果集，并作为下一轮的比较基准
+                res.add(new int[]{cur[0], cur[1]});
             }
         }
-        int[][] resArr = new int[res.size()][];
-        for (int i = 0; i < res.size(); i++) {
+        int resSize = res.size();
+        int[][] resArr = new int[resSize][];
+        for (int i = 0; i < resSize; i++) {
             resArr[i] = res.get(i);
         }
         return resArr;
     }
 
+    /**
+     * 按区间start升序排列
+     */
     private void sort(int[][] intervals) {
-        Arrays.sort(intervals, (a, b) -> {
-            if (a[0] == b[0]) {
-                return b[1] - a[1];
-            }
-            return a[0] - b[0];
-        });
+        Arrays.sort(intervals, Comparator.comparingInt(a -> a[0]));
     }
 
     public static void main(String[] args) {
         Merge clazz = new Merge();
-        int[][] intervals = new int[][]{{1, 3}, {2, 6}, {8, 10}, {15, 18}};
+        int[][] intervals = new int[][]{{1, 4}, {2, 3}};
         int[][] result = clazz.merge(intervals);
-        assert result.length == 3;
+        // 1, 4
+        assert result.length == 1;
     }
 }
