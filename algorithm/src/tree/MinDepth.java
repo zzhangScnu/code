@@ -1,4 +1,7 @@
-package tree;//给定一个二叉树，找出其最小深度。
+package tree;
+// 111-二叉树的最小深度
+// minimum-depth-of-binary-tree
+//给定一个二叉树，找出其最小深度。
 //
 // 最小深度是从根节点到最近叶子节点的最短路径上的节点数量。
 //
@@ -32,7 +35,9 @@ package tree;//给定一个二叉树，找出其最小深度。
 
 import structure.TreeNode;
 
+import java.util.LinkedList;
 import java.util.Objects;
+import java.util.Queue;
 
 /**
  * @author lihua
@@ -57,5 +62,44 @@ public class MinDepth {
             return left + right + 1;
         }
         return Math.min(left, right) + 1;
+    }
+
+    public int minDepthInBfs(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        // 如果用Dequeue的话，要注意方法是在哪端操作的
+        Queue<TreeNode> queue = new LinkedList<>();
+        int step = 1;
+        queue.offer(root);
+        TreeNode current;
+        int levelSize;
+        while (!queue.isEmpty()) {
+            levelSize = queue.size();
+            for (int i = 0; i < levelSize; i++) {
+                current = queue.poll();
+                // 层序遍历碰到的第一个叶子节点，就是最短路径的终点
+                if (current.left == null && current.right == null) {
+                    return step;
+                }
+                if (current.left != null) {
+                    queue.offer(current.left);
+                }
+                if (current.right != null) {
+                    queue.offer(current.right);
+                }
+            }
+            step++;
+        }
+        return step;
+    }
+
+    public static void main(String[] args) {
+        MinDepth clazz = new MinDepth();
+        TreeNode root = new TreeNode(1,
+                new TreeNode(2, new TreeNode(4, null, null), null),
+                new TreeNode(3, null, new TreeNode(5, null, null)));
+        int result = clazz.minDepthInBfs(root);
+        assert result == 3;
     }
 }
