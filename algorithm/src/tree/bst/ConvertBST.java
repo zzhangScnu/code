@@ -64,11 +64,10 @@ import structure.TreeNode;
  */
 public class ConvertBST {
 
-    private int currentSum;
+    private int currentSum = 0;
 
     public TreeNode convertBST(TreeNode root) {
-        // 算个总的sum，然后边中序遍历边维护sum，每次sum值减掉节点值那就是累加和
-        currentSum = sum(root);
+        // 初始化总的sum为0，然后边中序遍历边维护sum，每次sum值加上节点值那就是累加和
         doConvert(root);
         return root;
     }
@@ -77,18 +76,11 @@ public class ConvertBST {
         if (p == null) {
             return;
         }
-        doConvert(p.left);
-        int minus = p.val;
-        p.val = currentSum;
-        currentSum -= minus;
+        // 右子树 -> 根 -> 左子树，会降序输出结果
         doConvert(p.right);
-    }
-
-    private int sum(TreeNode p) {
-        if (p == null) {
-            return 0;
-        }
-        return p.val + sum(p.left) + sum(p.right);
+        currentSum += p.val;
+        p.val = currentSum;
+        doConvert(p.left);
     }
 
     public static void main(String[] args) {
