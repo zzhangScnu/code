@@ -47,37 +47,26 @@ import structure.ListNode;
 public class MergeTwoLists {
 
     public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
-        ListNode p = new ListNode(-101, list1);
-        ListNode q = new ListNode(-101, list2);
+        ListNode p = list1;
+        ListNode q = list2;
         ListNode newList = new ListNode(-101, null);
         ListNode head = newList;
         while (p != null && q != null) {
-            if (p.val != -101 && q.val != -101 && p.val <= q.val) {
-                newList.next = new ListNode(p.val, null);
-                newList = newList.next;
+            if (p.val <= q.val) {
+                newList.next = p;
                 p = p.next;
-            } else if (p.val != -101 && q.val != -101 && p.val > q.val) {
-                newList.next = new ListNode(q.val, null);
-                newList = newList.next;
-                q = q.next;
             } else {
-                p = p.next;
+                newList.next = q;
                 q = q.next;
             }
+            newList = newList.next;
         }
+        // 直接指向剩下的链
         if (p == null) {
-            while (q != null) {
-                newList.next = new ListNode(q.val, null);
-                newList = newList.next;
-                q = q.next;
-            }
+            newList.next = q;
         }
         if (q == null) {
-            while (p != null) {
-                newList.next = new ListNode(p.val, null);
-                newList = newList.next;
-                p = p.next;
-            }
+            newList.next = p;
         }
         return head.next;
     }
