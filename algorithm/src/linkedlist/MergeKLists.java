@@ -70,9 +70,17 @@ public class MergeKLists {
         ListNode head = new ListNode(-1, null);
         ListNode p = head;
         while (!queue.isEmpty()) {
-            p.next = queue.remove();
+            p.next = new ListNode(queue.remove().val, null);
             p = p.next;
         }
         return head.next;
+    }
+
+    public static void main(String[] args) {
+        MergeKLists clazz = new MergeKLists();
+        ListNode list1 = new ListNode(-2, new ListNode(-1, new ListNode(-1, new ListNode(-1, null))));
+        ListNode list2 = null;
+        ListNode result = clazz.mergeKLists(new ListNode[]{list1, list2});
+        assert result != null;
     }
 }
