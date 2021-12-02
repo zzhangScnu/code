@@ -61,16 +61,21 @@ public class MergeKLists {
 
     public ListNode mergeKLists(ListNode[] lists) {
         PriorityQueue<ListNode> queue = new PriorityQueue<>(Comparator.comparingInt(n -> n.val));
+        // 头结点加入堆中
         for (ListNode p : lists) {
-            while (p != null) {
+            if (p != null) {
                 queue.add(p);
-                p = p.next;
             }
         }
         ListNode head = new ListNode(-1, null);
         ListNode p = head;
+        ListNode cur;
         while (!queue.isEmpty()) {
-            p.next = new ListNode(queue.remove().val, null);
+            cur = queue.remove();
+            if (cur.next != null) {
+                queue.add(cur.next);
+            }
+            p.next = cur;
             p = p.next;
         }
         return head.next;
