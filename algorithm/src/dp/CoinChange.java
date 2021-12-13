@@ -55,48 +55,47 @@ package dp;
 //
 // Related Topics 广度优先搜索 数组 动态规划
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author lihua
  * @since 2021/12/13
  */
 public class CoinChange {
 
-    private Map<Integer, Integer> minCoins = new HashMap<>();
-
     /**
      * 求最少硬币个数
+     * f(0) = 0
      * f(amount) = min{f(amount - coin) + 1, f(amount)}
      */
     public int coinChange(int[] coins, int amount) {
-        if (minCoins.containsKey(amount)) {
-            return minCoins.get(amount);
-        }
-        if (amount == 0) {
-            return 0;
-        }
-        if (amount < 0) {
-            return -1;
-        }
-        // result不能定义成全局变量。因为针对每个选择之后剩下的金额，需要重新计算所需的最小硬币数
-        int result = Integer.MAX_VALUE;
-        for (int coin : coins) {
-            int pickedCoinsOfNextStep = coinChange(coins, amount - coin);
-            if (pickedCoinsOfNextStep == -1) {
-                continue;
+        int length = amount + 1;
+        int[] minCoinsOfAmount = initialDpTable(amount);
+        for (int thisAmount = 0; thisAmount < length; thisAmount++) {
+            for (int coin : coins) {
+                int nextAmount = thisAmount - coin;
+                if (nextAmount < 0) {
+                    continue;
+                }
+                minCoinsOfAmount[thisAmount] = Math.min(
+                        minCoinsOfAmount[thisAmount], minCoinsOfAmount[nextAmount] + 1);
             }
-            result = Math.min(pickedCoinsOfNextStep + 1, result);
         }
-        int pickedCoinsOfThisStep = result == Integer.MAX_VALUE ? -1 : result;
-        minCoins.put(amount, pickedCoinsOfThisStep);
-        return pickedCoinsOfThisStep;
+        return minCoinsOfAmount[amount] == Integer.MAX_VALUE - 1 ? -1 : minCoinsOfAmount[amount];
+    }
+
+    private int[] initialDpTable(int amount) {
+        int length = amount + 1;
+        int[] minCoinsOfAmount = new int[length];
+        for (int i = 0; i < length; i++) {
+            // 初始化为最大值-1，否则在循环里比较的时候会上溢为负数
+            minCoinsOfAmount[i] = Integer.MAX_VALUE - 1;
+        }
+        minCoinsOfAmount[0] = 0;
+        return minCoinsOfAmount;
     }
 
     public static void main(String[] args) {
         CoinChange clazz = new CoinChange();
-        int result = clazz.coinChange(new int[]{1, 2, 5}, 11);
+        int result = clazz.coinChange(new int[]{5}, 11);
         assert result == 3;
     }
 }
