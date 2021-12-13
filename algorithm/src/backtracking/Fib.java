@@ -52,21 +52,21 @@ package backtracking;
  */
 public class Fib {
 
-    private int[] record;
-
     public int fib(int n) {
-        record = new int[n + 1];
-        return doFib(n);
-    }
-
-    private int doFib(int n) {
-        record[0] = 0;
-        if (n > 0) {
-            record[1] = 1;
+        if (n == 0) {
+            return 0;
         }
+        if (n == 1) {
+            return 1;
+        }
+        int prepre = 0;
+        int pre = 1;
+        int res = 0;
         for (int i = 2; i <= n; i++) {
-            record[i] = record[i - 1] + record[i - 2];
+            res = pre + prepre;
+            prepre = pre;
+            pre = res;
         }
-        return record[n];
+        return res;
     }
 }
