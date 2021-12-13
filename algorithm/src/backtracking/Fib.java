@@ -60,17 +60,13 @@ public class Fib {
     }
 
     private int doFib(int n) {
-        if (n == 0) {
-            return 0;
+        record[0] = 0;
+        if (n > 0) {
+            record[1] = 1;
         }
-        if (n == 1) {
-            return 1;
+        for (int i = 2; i <= n; i++) {
+            record[i] = record[i - 1] + record[i - 2];
         }
-        if (record[n] != 0) {
-            return record[n];
-        }
-        int result = doFib(n - 1) + doFib(n - 2);
-        record[n] = result;
-        return result;
+        return record[n];
     }
 }
