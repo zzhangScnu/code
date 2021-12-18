@@ -62,26 +62,27 @@ public class MinPathSum {
         rowLength = grid.length;
         colLength = grid[0].length;
         initializeSum();
-        return find(grid, rowLength - 1, colLength - 1);
+        find(grid);
+        return sum[rowLength - 1][colLength - 1];
     }
 
-    private int find(int[][] grid, int row, int col) {
-        if (row < 0 || row >= rowLength || col < 0 || col >= colLength) {
-            return INITIAL_NUM;
+    private void find(int[][] grid) {
+        for (int row = 0; row < rowLength; row++) {
+            for (int col = 0; col < colLength; col++) {
+                // base case是起点[0,0]
+                if (row == 0 && col == 0) {
+                    sum[0][0] = grid[0][0];
+                    continue;
+                }
+                // 反L型
+                // 如果列是0，说明是从上面走下来的
+                int left = col >= 1 ? sum[row][col - 1] : INITIAL_NUM;
+                // 如果行是0，说明是说左边走过来的
+                int up = row >= 1 ? sum[row - 1][col] : INITIAL_NUM;
+                int currentMinSum = grid[row][col] + Math.min(left, up);
+                sum[row][col] = currentMinSum;
+            }
         }
-        // base case是起点[0,0]
-        if (row == 0 && col == 0) {
-            return grid[0][0];
-        }
-        if (sum[row][col] != INITIAL_NUM) {
-            return sum[row][col];
-        }
-        // 反L型
-        int left = find(grid, row, col - 1);
-        int up = find(grid, row - 1, col);
-        int currentMinSum = grid[row][col] + Math.min(left, up);
-        sum[row][col] = currentMinSum;
-        return currentMinSum;
     }
 
     private void initializeSum() {
