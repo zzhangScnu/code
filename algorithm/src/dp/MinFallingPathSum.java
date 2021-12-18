@@ -70,45 +70,40 @@ public class MinFallingPathSum {
      */
     private int[][] sum;
 
+    private int length;
+
     private int result = INITIAL_NUM;
 
     public int minFallingPathSum(int[][] matrix) {
-        initialSum(matrix);
-        int length = matrix.length;
+        length = matrix.length;
+        initialSum();
+        find(matrix);
         for (int col = 0; col < length; col++) {
             // 结果应该是落在最后一行的某一列上
-            result = Math.min(result, find(matrix, length - 1, col));
+            result = Math.min(result, sum[length - 1][col]);
         }
         return result;
     }
 
-    private int find(int[][] matrix, int row, int col) {
-        int length = matrix.length;
-        if (row < 0 || col < 0 || row >= length || col >= length) {
-            return INITIAL_NUM;
-        }
+    private void find(int[][] matrix) {
         // base case是第一行的任意一列
-        if (row == 0) {
-            return matrix[0][col];
+        System.arraycopy(matrix[0], 0, sum[0], 0, length);
+        for (int row = 1; row < length; row++) {
+            for (int col = 0; col < length; col++) {
+                // T字型的回溯路径
+                int topLeft = col >= 1 ? sum[row - 1][col - 1] : INITIAL_NUM;
+                int top = sum[row - 1][col];
+                int topRight = col < length - 1 ? sum[row - 1][col + 1] : INITIAL_NUM;
+                sum[row][col] = matrix[row][col] + min(topLeft, top, topRight);
+            }
         }
-        if (sum[row][col] != INITIAL_NUM) {
-            return sum[row][col];
-        }
-        // T字型的回溯路径
-        int currentMin = matrix[row][col] + min(
-                find(matrix, row - 1, col),
-                find(matrix, row - 1, col - 1),
-                find(matrix, row - 1, col + 1));
-        sum[row][col] = currentMin;
-        return currentMin;
     }
 
     private int min(int a, int b, int c) {
         return Math.min(a, Math.min(b, c));
     }
 
-    private void initialSum(int[][] matrix) {
-        int length = matrix.length;
+    private void initialSum() {
         sum = new int[length][length];
         for (int i = 0; i < length; i++) {
             Arrays.fill(sum[i], INITIAL_NUM);
