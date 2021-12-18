@@ -53,6 +53,7 @@ package dp;
 import java.util.Arrays;
 
 /**
+ *
  * @author lihua
  * @since 2021/12/17
  */
@@ -68,44 +69,51 @@ public class MinFallingPathSum {
      */
     private int[][] sum;
 
+    private int length;
+
     private int result = INITIAL_NUM;
 
     public int minFallingPathSum(int[][] matrix) {
-        initialSum(matrix);
-        int length = matrix.length;
-        for (int col = 0; col < length; col++) {
-            // 结果应该是落在最后一行的某一列上
-            result = Math.min(result, find(matrix, length - 1, col));
+        length = matrix.length;
+        initialSum();
+        for (int row = 0; row < length; row++) {
+            for (int col = 0; col < length; col++) {
+                fillSum(matrix, row, col);
+                if (row == length - 1) {
+                    // 这样做其实不行，不能保证是一条完整的下降路径
+                    result = Math.min(result, sum[row][col]);
+                }
+            }
         }
         return result;
     }
 
-    private int find(int[][] matrix, int row, int col) {
-        int length = matrix.length;
-        if (row < 0 || col < 0 || row >= length || col >= length) {
-            return INITIAL_NUM;
-        }
+    private void fillSum(int[][] matrix, int row, int col) {
         if (row == 0) {
-            return matrix[0][col];
+            sum[0][col] = matrix[0][col];
+            return;
         }
         if (sum[row][col] != INITIAL_NUM) {
-            return sum[row][col];
+            return;
         }
         // T字型的回溯路径
-        int currentMin = matrix[row][col] + min(
-                find(matrix, row - 1, col),
-                find(matrix, row - 1, col - 1),
-                find(matrix, row - 1, col + 1));
+        int topLeft = valid(row - 1, col) ? matrix[row - 1][col] : INITIAL_NUM;
+        int top = valid(row - 1, col - 1) ? matrix[row - 1][col - 1] : INITIAL_NUM;
+        int topRight = valid(row - 1, col + 1) ? matrix[row - 1][col + 1] : INITIAL_NUM;
+        int currentMin = matrix[row][col] + min(topLeft, top, topRight);
         sum[row][col] = currentMin;
-        return currentMin;
     }
 
     private int min(int a, int b, int c) {
         return Math.min(a, Math.min(b, c));
     }
 
-    private void initialSum(int[][] matrix) {
-        int length = matrix.length;
+    private boolean valid(int row, int col) {
+        return row >= 0 && row < length
+                && col >= 0 && col < length;
+    }
+
+    private void initialSum() {
         sum = new int[length][length];
         for (int i = 0; i < length; i++) {
             Arrays.fill(sum[i], INITIAL_NUM);
