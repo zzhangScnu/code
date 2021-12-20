@@ -46,6 +46,8 @@ package dp;
 //
 // Related Topics 数组 动态规划 回溯
 
+import java.util.HashMap;
+
 /**
  * 中间那段遍历子树(选择-撤销)的过程等同于：
  * // 选择加号
@@ -62,23 +64,29 @@ package dp;
  */
 public class FindTargetSumWays {
 
-    private int counter = 0;
+    private HashMap<String, Integer> resultMap = new HashMap<>();
 
     public int findTargetSumWays(int[] nums, int target) {
-        doFind(nums, target, 0);
-        return counter;
+        return doFind(nums, target, 0);
     }
 
-    private void doFind(int[] nums, int target, int index) {
-        // 这里第一次写的时候写成了nums.length - 1，注意是要进入到再下一层的时候才是base case
+    private int doFind(int[] nums, int target, int index) {
         if (index == nums.length) {
             if (target == 0) {
-                counter++;
+                return 1;
             }
-            return;
+            return 0;
         }
-        doFind(nums, target - nums[index], index + 1);
-        doFind(nums, target + nums[index], index + 1);
+        String key = target + "/" + index;
+        if (resultMap.containsKey(key)) {
+            return resultMap.get(key);
+        }
+        // 其实相当于中序遍历时，左右两棵子树的和
+        int subResult1 = doFind(nums, target - nums[index], index + 1);
+        int subResult2 = doFind(nums, target + nums[index], index + 1);
+        int result = subResult1 + subResult2;
+        resultMap.put(key, result);
+        return result;
     }
 
     public static void main(String[] args) {
