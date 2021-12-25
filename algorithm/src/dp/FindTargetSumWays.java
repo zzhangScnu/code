@@ -91,9 +91,59 @@ public class FindTargetSumWays {
 
     public static void main(String[] args) {
         FindTargetSumWays clazz = new FindTargetSumWays();
-        int[] nums = new int[]{1, 1, 1, 1, 1};
-        int target = 3;
+        int[] nums = new int[]{100};
+        int target = -200;
         int result = clazz.findTargetSumWays(nums, target);
-        assert result == 5;
+        assert result == 0;
+        // todo：这个用例暂时想不到解
+        result = clazz.findTargetSumWaysByDp(nums, target);
+        assert result == 0;
+    }
+
+    /**
+     * 一开始的思路其实是将元素变成正负数作为候选项，来求结果值的
+     * 但是这样有个问题，dp[i][w]的w在减去负值的时候就会越界
+     * <p>
+     * sum(A) - sum(B) = target
+     * sum(A) = target + sum(B)
+     * sum(A) + sum(A) = target + sum(B) + sum(A)
+     * 2 * sum(A) = target + sum(nums)
+     * sum(A) = (target + sum(nums)) / 2
+     * 问题转化成对子集A，有多少种方法可以凑成
+     */
+    public int findTargetSumWaysByDp(int[] nums, int target) {
+        int sum = 0;
+        for (int num : nums) {
+            sum += num;
+        }
+        // 注意边界条件
+        if (sum < target || (sum + target) % 2 != 0) {
+            return 0;
+        }
+        return doFindTargetSumWaysByDp(nums, (sum + target) / 2);
+    }
+
+    private int doFindTargetSumWaysByDp(int[] nums, int target) {
+        int length = nums.length;
+        int[][] dp = initialDp(length, target);
+        for (int i = 1; i <= length; i++) {
+            for (int w = 1; w <= target; w++) {
+                if (nums[i - 1] > w) {
+                    dp[i][w] = dp[i - 1][w];
+                } else {
+                    // 当前的方法数为：装入 + 不装入的方法数的和
+                    dp[i][w] = dp[i - 1][w - nums[i - 1]] + dp[i - 1][w];
+                }
+            }
+        }
+        return dp[length][target];
+    }
+
+    private int[][] initialDp(int length, int target) {
+        int[][] dp = new int[length + 1][target + 1];
+        for (int i = 0; i <= length; i++) {
+            dp[i][0] = 1;
+        }
+        return dp;
     }
 }
