@@ -6,7 +6,7 @@ import java.util.Arrays;
  * @author lihua
  * @since 2022/1/10
  */
-public class BubbleSort {
+public class SelectionSort {
 
     public int[] sortArray(int[] nums) {
         doSort(nums);
@@ -15,13 +15,16 @@ public class BubbleSort {
 
     private void doSort(int[] nums) {
         int length = nums.length;
-        for (int i = 0; i < length; i++) {
-            // 内层可以从0开始但没必要
-            for (int j = i + 1; j < length; j++) {
-                if (nums[i] < nums[j]) {
-                    swap(nums, i, j);
+        int minIndex;
+        for (int placedIndex = 0; placedIndex < length; placedIndex++) {
+            minIndex = placedIndex;
+            // 内层不能从0开始
+            for (int i = placedIndex + 1; i < length; i++) {
+                if (nums[minIndex] > nums[i]) {
+                    minIndex = i;
                 }
             }
+            swap(nums, placedIndex, minIndex);
         }
     }
 
@@ -32,8 +35,8 @@ public class BubbleSort {
     }
 
     public static void main(String[] args) {
-        int[] arr = {12, 11, 13, 5, 6, 7};
-        BubbleSort clazz = new BubbleSort();
+        int[] arr = {5, 2, 3, 1};
+        SelectionSort clazz = new SelectionSort();
         clazz.sortArray(arr);
         Arrays.stream(arr).forEach(System.out::println);
     }
