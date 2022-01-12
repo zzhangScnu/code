@@ -49,14 +49,23 @@ public class Rob {
      */
     public int rob(int[] nums) {
         int length = nums.length;
-        int[] dp = new int[length + 2];
-        for (int i = length - 1; i >= 0; i--) {
+        int[] dp = new int[length];
+        for (int i = 0; i < length; i++) {
+            // 如果想要正序遍历的话，就需要兼容i - 1 / i - 2时的数组越界问题
+            if (i == 0) {
+                dp[i] = nums[i];
+                continue;
+            }
+            if (i == 1) {
+                dp[i] = Math.max(nums[0], nums[1]);
+                continue;
+            }
             dp[i] = Math.max(
-                    dp[i + 1],
-                    dp[i + 2] + nums[i]
+                    dp[i - 1],
+                    dp[i - 2] + nums[i]
             );
         }
-        return dp[0];
+        return dp[length - 1];
     }
 
     public static void main(String[] args) {
