@@ -1,4 +1,4 @@
-package multiplethread;
+package multiplethread.doubleworker;
 
 /**
  * @author lihua

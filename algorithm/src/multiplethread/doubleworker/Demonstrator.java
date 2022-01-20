@@ -1,4 +1,4 @@
-package multiplethread;
+package multiplethread.doubleworker;
 
 /**
  * @author lihua
@@ -7,7 +7,7 @@ package multiplethread;
 public class Demonstrator {
 
     public static void main(String[] args) {
-        doPrint(new SynchronizePrinter(1));
+        doPrint(new SynchronizedPrinter(1));
         doPrint(new ReentrantLockPrinter(1));
         doPrint(new SemaphorePrinter());
         doPrint(new CountdownLatchPrinter());

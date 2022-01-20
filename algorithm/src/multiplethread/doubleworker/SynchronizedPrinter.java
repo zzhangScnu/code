@@ -1,14 +1,14 @@
-package multiplethread;
+package multiplethread.doubleworker;
 
 /**
  * @author lihua
  * @since 2021/12/29
  */
-public class SynchronizePrinter implements Printer {
+public class SynchronizedPrinter implements Printer {
 
     private boolean printOdd;
 
-    public SynchronizePrinter(int start) {
+    public SynchronizedPrinter(int start) {
         this.printOdd = isOdd(start);
     }
 

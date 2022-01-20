@@ -1,4 +1,4 @@
-package multiplethread;
+package multiplethread.doubleworker;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
