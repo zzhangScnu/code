@@ -3,54 +3,53 @@ package linkedlist;
 import structure.ListNode;
 
 /**
- * 单链表的实现
- * 特别要注意尾指针的更新
+ * 循环链表的实现
+ * 不同之处在于：判断是链表尾结点时，next指向的是头结点而不再是null
  *
  * @author lihua
  * @since 2022/2/5
  */
 @SuppressWarnings("DuplicatedCode")
-public class LinkedList {
+public class CircularLinkedList {
 
-    /**
-     * 虚拟头结点
-     */
     private final ListNode head;
 
     private ListNode tail;
 
-    public LinkedList() {
+    public CircularLinkedList() {
         this.head = new ListNode(-1);
+        this.head.next = this.head;
         this.tail = this.head;
     }
 
     public void addFirst(int data) {
         ListNode newNode = new ListNode(data);
         newNode.next = this.head.next;
-        if (newNode.next == null) {
+        this.head.next = newNode;
+        if (newNode.next == this.head) {
             this.tail = newNode;
         }
-        this.head.next = newNode;
     }
 
     public void addLast(int data) {
-        this.tail.next = new ListNode(data);
-        this.tail = this.tail.next;
+        ListNode newNode = new ListNode(data);
+        newNode.next = this.tail.next;
+        this.tail.next = newNode;
+        this.tail = newNode;
     }
 
     public void addAt(int index, int data) {
         ListNode cur = this.head;
-        // 为了定位到目标结点的前一个结点
         while (index > 0) {
             cur = cur.next;
             index--;
         }
         ListNode newNode = new ListNode(data);
         newNode.next = cur.next;
-        if (cur.next == null) {
+        cur.next = newNode;
+        if (newNode.next == this.head) {
             this.tail = newNode;
         }
-        cur.next = newNode;
     }
 
     public void delete(int data) {
@@ -58,7 +57,7 @@ public class LinkedList {
         while (cur.next != null) {
             if (cur.next.val == data) {
                 cur.next = cur.next.next;
-                if (cur.next == null) {
+                if (cur.next == this.head) {
                     this.tail = cur;
                 }
                 break;
@@ -71,10 +70,13 @@ public class LinkedList {
         ListNode cur = this.head;
         while (index > 0) {
             cur = cur.next;
+            if (cur == this.head) {
+                throw new IllegalStateException("index out of bound");
+            }
             index--;
         }
         cur.next = cur.next.next;
-        if (cur.next == null) {
+        if (cur.next == this.head) {
             this.tail = cur;
         }
     }
@@ -82,16 +84,17 @@ public class LinkedList {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        ListNode cur = this.head;
-        while (cur.next != null) {
-            sb.append(cur.next.val).append(", ");
+        ListNode cur = this.head.next;
+        // 避免死循环
+        while (cur != this.head) {
+            sb.append(cur.val).append(", ");
             cur = cur.next;
         }
         return sb.toString();
     }
 
     public static void main(String[] args) {
-        LinkedList linkedList = new LinkedList();
+        CircularLinkedList linkedList = new CircularLinkedList();
         linkedList.addFirst(3);
         linkedList.addFirst(2);
         linkedList.addFirst(1);
