@@ -23,14 +23,17 @@ public class DoublyLinkedList {
     private final ListNode head;
 
     private ListNode tail;
+    
+    private int size;
 
     public DoublyLinkedList() {
         this.head = new ListNode(-1);
         this.tail = this.head;
+        this.size = 0;
     }
 
-    public void addFirst(int data) {
-        ListNode newNode = new ListNode(data);
+    public void addAtHead(int val) {
+        ListNode newNode = new ListNode(val);
         newNode.next = this.head.next;
         // 注意点：这个地方第一次忘记连上了
         if (this.head.next != null) {
@@ -41,22 +44,39 @@ public class DoublyLinkedList {
         if (newNode.next == null) {
             this.tail = newNode;
         }
+        this.size++;
     }
 
-    public void addLast(int data) {
-        ListNode newNode = new ListNode(data);
+    public void addAtTail(int val) {
+        ListNode newNode = new ListNode(val);
         newNode.pre = this.tail;
         this.tail.next = newNode;
         this.tail = newNode;
+        this.size++;
     }
 
-    public void addAt(int index, int data) {
+    public void addAtIndex(int index, int val) {
+        if (index < 0) {
+            addAtHead(val);
+            return;
+        }
+        if (index == size) {
+            addAtTail(val);
+            return;
+        }
+        if (index > size) {
+            return;
+        }
+        doAddAtIndex(index, val);
+    }
+
+    private void doAddAtIndex(int index, int val) {
         ListNode cur = this.head;
         while (index > 0) {
             cur = cur.next;
             index--;
         }
-        ListNode newNode = new ListNode(data);
+        ListNode newNode = new ListNode(val);
         newNode.next = cur.next;
         // 注意点：这个地方第一次忘记连上了
         if (cur.next != null) {
@@ -67,12 +87,13 @@ public class DoublyLinkedList {
         if (newNode.next == null) {
             this.tail = newNode;
         }
+        this.size++;
     }
 
-    public void delete(int data) {
+    public void delete(int val) {
         ListNode cur = this.head;
         while (cur.next != null) {
-            if (cur.next.val == data) {
+            if (cur.next.val == val) {
                 ListNode nNext = cur.next.next;
                 if (nNext != null) {
                     nNext.pre = cur;
@@ -85,15 +106,16 @@ public class DoublyLinkedList {
             }
             cur = cur.next;
         }
+        this.size--;
     }
 
-    public void deleteAt(int index) {
+    public void deleteAtIndex(int index) {
+        if (index >= size) {
+            return;
+        }
         ListNode cur = this.head;
         while (index > 0) {
             cur = cur.next;
-            if (cur == null) {
-                throw new IllegalStateException("index out of bound");
-            }
             index--;
         }
         ListNode nNext = cur.next.next;
@@ -104,6 +126,7 @@ public class DoublyLinkedList {
         if (cur.next == null) {
             this.tail = cur;
         }
+        this.size--;
     }
 
     @Override
@@ -117,17 +140,29 @@ public class DoublyLinkedList {
         return sb.toString();
     }
 
+    public int get(int index) {
+        if (index < 0 || index >= size) {
+            return -1;
+        }
+        ListNode cur = this.head;
+        while (index >= 0) {
+            cur = cur.next;
+            index--;
+        }
+        return cur.val;
+    }
+
     public static void main(String[] args) {
         DoublyLinkedList linkedList = new DoublyLinkedList();
-        linkedList.addFirst(3);
-        linkedList.addFirst(2);
-        linkedList.addFirst(1);
-        linkedList.addLast(4);
+        linkedList.addAtHead(3);
+        linkedList.addAtHead(2);
+        linkedList.addAtHead(1);
+        linkedList.addAtTail(4);
         // 1, 2, 0, 3, 4
-        linkedList.addAt(2, 0);
+        linkedList.addAtIndex(2, 0);
         linkedList.delete(1);
-        linkedList.deleteAt(0);
-        linkedList.deleteAt(2);
+        linkedList.deleteAtIndex(0);
+        linkedList.deleteAtIndex(2);
         System.out.println(linkedList);
     }
 }

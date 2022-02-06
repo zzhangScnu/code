@@ -45,6 +45,8 @@ public class MiddleNode {
 
     public ListNode middleNode(ListNode head) {
         ListNode slow = head;
+        // 若fast初始化为head.next，则函数求得的是第一个中间结点
+        // 若fast初始化为head，则函数求得的是第二个中间结点
         ListNode fast = head;
         while (fast != null && fast.next != null) {
             slow = slow.next;

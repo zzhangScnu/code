@@ -68,6 +68,7 @@ public class MergeTwoLists {
         if (q == null) {
             newList.next = p;
         }
+        // 哨兵结点
         return head.next;
     }
 

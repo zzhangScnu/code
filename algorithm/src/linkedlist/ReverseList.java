@@ -70,6 +70,7 @@ public class ReverseList {
 		}
 		ListNode pre = null;
 		ListNode cur = head;
+		// 这个nxt其实是起到中间结点的作用，它保存了cur指向pre之前指向的下一个结点
 		ListNode nxt = head.next;
 		while (Objects.nonNull(nxt)) {
 			cur.next = pre;
