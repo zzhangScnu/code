@@ -104,6 +104,11 @@ public class OrderedArray {
             return arr[index];
         }
 
+        public int find(int data) {
+            // todo：有序数组的二分查找
+            return -1;
+        }
+
         @Override
         public String toString() {
             return Arrays.stream(arr)
