@@ -54,6 +54,9 @@ import java.util.PriorityQueue;
 // Related Topics 链表 分治 堆（优先队列） 归并排序
 
 /**
+ * 所有链表一次性入堆时，拼接的链表的最后一个结点的next不会为null，而是指向在原来链表中的下一个结点
+ * 这时候手动设置为null即可
+ *
  * @author lihua
  * @since 2021/12/2
  */
@@ -72,6 +75,7 @@ public class MergeKLists {
         ListNode cur;
         while (!queue.isEmpty()) {
             cur = queue.remove();
+            // 逐个加入堆中，可以避免一次性全部入堆造成时间和空间复杂度过高
             if (cur.next != null) {
                 queue.add(cur.next);
             }

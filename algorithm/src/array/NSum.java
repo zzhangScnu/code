@@ -69,9 +69,13 @@ public class NSum {
 		if (n == 2) {
 			return twoSum(nums, from, target);
 		}
+		// length, not n
 		for (int first = from; first < length; first++) {
+			// 这里一定要赋值给额外的变量，因为lambda要求要用efficiency final形式
 			int firstNum = nums[first];
+			// 这里第一次写成了target -= firstNum
 			int newTarget = target - firstNum;
+			// first, not from
 			nSum(nums, newTarget, first + 1, n - 1).stream()
 					.peek(result -> result.add(firstNum))
 					.forEach(resultList::add);
@@ -97,10 +101,12 @@ public class NSum {
 			if (sum > target) {
 				high--;
 			}
+			// 这里if和else if等价
 			if (sum < target) {
 				low++;
 			}
 			if (sum == target) {
+				// 因为到上层还要把firstNum加进来，所以不能直接用Arrays.asList
 				List<Integer> result = new ArrayList<>();
 				result.add(nums[low]);
 				result.add(nums[high]);
