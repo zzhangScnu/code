@@ -59,41 +59,52 @@ import structure.ListNode;
 import java.util.Objects;
 
 /**
+ * ZJ-SECOND-ROUND
+ *
  * @author lihua
  * @since 2021/10/23
  */
 public class ReverseKGroup {
 
-    public ListNode reverseKGroup(ListNode head, int k) {
-        if (Objects.isNull(head)) {
-            return null;
-        }
-        ListNode p = head;
-        ListNode q = head;
-        for (int i = 0; i < k; i++) {
-            // 不足k个，就不反转了
-            if (Objects.isNull(q)) {
-                return head;
-            }
+    public static ListNode reverseKGroup(ListNode head, int k) {
+        ListNode dummy = new ListNode(-1, head);
+        ListNode p = dummy;
+        // 这里，第一次只是指向dummy，这样不满足q是要翻转的链表的下一个结点的定义
+        ListNode q = dummy.next;
+        int index = 0;
+        while (q != null) {
             q = q.next;
+            index++;
+            if (index == k) {
+                ListNode newHead = reverseBetween(p.next, q);
+                p.next.next = q;
+                p.next = newHead;
+                index = 0;
+                // 这里，第一次写成 p = q
+                // p要遍历为已翻转的链表部分的最后一个结点
+                while (p.next != q) {
+                    p = p.next;
+                }
+            }
         }
-        ListNode newHead = reverseBetween(p, q);
-        p.next = reverseKGroup(q, k);
-        return newHead;
+        return dummy.next;
     }
 
     /**
-     * 反转[p, q)之间的节点，左闭右开的
-     */
-    private ListNode reverseBetween(ListNode p, ListNode q) {
-        // 左闭右开，反转后的头节点是右区间的上一个节点
-        // 如果用equals判定的话，当k=1，p指向最后一个节点的时候，会报空指针错误
-        if (p.next == q) {
-            return p;
+     * 翻转从head到end的部分
+     **/
+    private static ListNode reverseBetween(ListNode head, ListNode end) {
+        if (head.next == end) {
+            return head;
         }
-        ListNode last = reverseBetween(p.next, q);
-        p.next.next = p;
-        p.next = q;
-        return last;
+        ListNode newHead = reverseBetween(head.next, end);
+        head.next.next = head;
+        return newHead;
+    }
+
+    public static void main(String[] args) {
+        ListNode head = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))));
+        ListNode newHead = reverseKGroup(head, 2);
+        System.out.println("finish");
     }
 }
