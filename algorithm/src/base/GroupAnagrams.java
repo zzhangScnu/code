@@ -1,6 +1,7 @@
 package base;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,58 +46,34 @@ import java.util.Map;
 
 /**
  * OD
+ * <p>
+ * 对每个字符串排序，如果互为异位词，则排序后应该相等
  *
  * @author lihua
  * @since 2022/4/1
  */
 public class GroupAnagrams {
 
-    /**
-     * todo：fix this
-     */
     public static void main(String[] args) {
-        int[] nums = new int[]{123, 321, 213, 333, 444};
-        GroupAnagrams numbersDivide = new GroupAnagrams();
-        List<List<Integer>> resultList = numbersDivide.divide(nums);
+        String[] strArr = new String[]{"eat", "tea", "tan", "ate", "nat", "bat"};
+        GroupAnagrams groupAnagrams = new GroupAnagrams();
+        List<List<String>> resultList = groupAnagrams.groupAnagrams(strArr);
         System.out.println(resultList);
     }
 
-    public List<List<Integer>> divide(int[] nums) {
-        List<List<Integer>> resultList = new ArrayList<>(16);
-        int length = nums.length;
-        int num;
-        for (int i = 0; i < length; i++) {
-            List<Integer> result = new ArrayList<>(16);
-            num = nums[i];
-            result.add(num);
-            Map<Integer, Integer> counter = count(num);
-            for (int j = i + 1; j < length; j++) {
-                if (judgeAndRecord(nums[j], counter, result)) {
-                    i = j;
-                }
-            }
-            resultList.add(result);
+    public List<List<String>> groupAnagrams(String[] strArr) {
+        Map<String, List<String>> counter = new HashMap<>(16);
+        char[] strChars;
+        List<String> groupList;
+        String orderedStr;
+        for (String str : strArr) {
+            strChars = str.toCharArray();
+            Arrays.sort(strChars);
+            orderedStr = new String(strChars);
+            groupList = counter.getOrDefault(orderedStr, new ArrayList<>());
+            groupList.add(str);
+            counter.put(orderedStr, groupList);
         }
-        return resultList;
-    }
-
-    private boolean judgeAndRecord(int candidate, Map<Integer, Integer> counter, List<Integer> result) {
-        Map<Integer, Integer> candidateCounter = count(candidate);
-        if (candidateCounter.equals(counter)) {
-            result.add(candidate);
-            return true;
-        }
-        return false;
-    }
-
-    private Map<Integer, Integer> count(int num) {
-        Map<Integer, Integer> counter = new HashMap<>(16);
-        int bit;
-        while (num != 0) {
-            bit = num % 10;
-            counter.put(bit, counter.getOrDefault(bit, 0) + 1);
-            num /= 10;
-        }
-        return counter;
+        return new ArrayList<>(counter.values());
     }
 }
