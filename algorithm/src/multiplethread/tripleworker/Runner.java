@@ -12,7 +12,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Runner {
 
     public static void main(String[] args) throws InterruptedException {
-        runBySemaphore();
+        runByCondition();
     }
 
     private static void runBySynchronized() throws InterruptedException {
@@ -23,7 +23,7 @@ public class Runner {
         Runnable bPrinter = new SynchronizedPrinter("B", aLock, bLock);
         Runnable cPrinter = new SynchronizedPrinter("C", bLock, cLock);
         new Thread(aPrinter).start();
-        // 保证执行先后顺序
+        // 保证执行先后顺序 todo: 为什么必须有
         Thread.sleep(1000);
         new Thread(bPrinter).start();
         new Thread(cPrinter).start();
@@ -38,13 +38,13 @@ public class Runner {
         Thread bPrinter = new ConditionPrinter("B", lock, bCondition, cCondition);
         Thread cPrinter = new ConditionPrinter("C", lock, cCondition, aCondition);
         aPrinter.start();
-        // 保证执行先后顺序
+        // 保证执行先后顺序 todo: 为什么必须有
         Thread.sleep(1000);
         bPrinter.start();
         cPrinter.start();
     }
 
-    private static void runBySemaphore() throws InterruptedException {
+    private static void runBySemaphore() {
         Semaphore aSemaphore = new Semaphore(1);
         Semaphore bSemaphore = new Semaphore(0);
         Semaphore cSemaphore = new Semaphore(0);
@@ -52,8 +52,6 @@ public class Runner {
         Thread bPrinter = new SemaphorePrinter("B", bSemaphore, cSemaphore);
         Thread cPrinter = new SemaphorePrinter("C", cSemaphore, aSemaphore);
         aPrinter.start();
-        // 保证执行先后顺序
-        Thread.sleep(1000);
         bPrinter.start();
         cPrinter.start();
     }

@@ -80,8 +80,6 @@ public class LockPrinter {
         Runnable bPrinter = lockPrinter.new PrinterB();
         Runnable cPrinter = lockPrinter.new PrinterC();
         new Thread(aPrinter).start();
-        // 保证执行先后顺序
-        Thread.sleep(1000);
         new Thread(bPrinter).start();
         new Thread(cPrinter).start();
     }

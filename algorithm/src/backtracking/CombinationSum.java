@@ -1,4 +1,5 @@
-package backtracking;//给定一个无重复元素的正整数数组 candidates 和一个正整数 target ，找出 candidates 中所有可以使数字和为目标数 target 的
+package backtracking;
+//给定一个无重复元素的正整数数组 candidates 和一个正整数 target ，找出 candidates 中所有可以使数字和为目标数 target 的
 //唯一组合。
 //
 // candidates 中的数字可以无限制重复被选取。如果至少一个所选数字数量不同，则两种组合是唯一的。
@@ -79,6 +80,7 @@ public class CombinationSum {
 
     /**
      * target是减去当前选择元素的，这样就不用多一个数据结构保存当前各桶状况
+     * 怎么保证是唯一组合的呢？已经获得想要的子集时，就会往上return，重新进入下一轮的考察（即i会增加），且candidates是有序+不重复的
      */
     private void backtrack(int[] candidates, int target, int beginIndex, LinkedList<Integer> track) {
         // 已经获得想要的子集了

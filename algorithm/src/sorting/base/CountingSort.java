@@ -40,6 +40,7 @@ public class CountingSort {
         }
         int length = sumArray.length;
         // 这番计算之后，sumArray[i]代表的就是【nums[i]减去偏移量的值】在整个序列里的排名
+        // 类似前缀和
         for (int i = 1; i < length; i++) {
             sumArray[i] += sumArray[i - 1];
         }

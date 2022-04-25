@@ -50,9 +50,9 @@ public class CombinationSumIII {
             resultList.add(new ArrayList<>(track));
             return;
         }
-        // k - track.size() <= 9 - num + 1，才有可能最终凑到k个数字
+        // k - track.size() <= 9 - num + 1，才有可能最终凑到k个数字（num即是数字本身，也是数字的index）
         for (int i = num; i <= 9 - k + track.size() + 1; i++) {
-            // 因为组合里不能有重复，即下一层的节点跟这一层已经选择的节点不能相同
+            // 因为组合里不能有重复的数字，即下一层的节点跟这一层已经选择的节点不能相同
             if (!track.isEmpty() && i <= track.getLast()) {
                 continue;
             }

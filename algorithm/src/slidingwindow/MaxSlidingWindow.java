@@ -81,8 +81,6 @@ public class MaxSlidingWindow {
         for (int i = 0; i < k; i++) {
             queue.add(new int[]{nums[i], i});
         }
-        // 这里是peek而不是poll：每次取最大值，都不应该从堆中移除
-        results[0] = queue.peek()[0];
         for (int i = k; i < length; i++) {
             queue.add(new int[]{nums[i], i});
             // 当堆顶元素已经不在滑动窗口中时，把它移除

@@ -38,7 +38,7 @@ import java.util.PriorityQueue;
 
 /**
  * 可以在大根堆中存储一个数组/对象，同时放入数字和出现的次数，
- * 这样只需要k次比较放入大根堆，而不是全部放入再取前k个
+ * 这样只需要k（n？）次比较放入大根堆，而不是全部放入再取前k个
  *
  * @author lihua
  * @since 2021/11/3
@@ -53,20 +53,21 @@ public class TopKFrequent {
             frequency.put(num, frequency.getOrDefault(num, 0) + 1);
         }
         // 根据出现次数给大根堆排序
-        PriorityQueue<Integer> queue = new PriorityQueue<>((o1, o2) -> frequency.get(o2) - frequency.get(o1));
+        PriorityQueue<Integer> queue = new PriorityQueue<>(k, (o1, o2) -> frequency.get(o2) - frequency.get(o1));
         queue.addAll(frequency.keySet());
         int[] results = new int[k];
-        for (int i = 0; i < k; i++) {
-            results[i] = queue.remove();
+        int i = 0;
+        while (!queue.isEmpty()) {
+            results[i++] = queue.remove();
         }
         return results;
     }
 
     public static void main(String[] args) {
         TopKFrequent clazz = new TopKFrequent();
-        int[] nums = new int[]{3, 2, 3, 1, 2, 4, 5, 5, 6, 7, 7, 8, 2, 3, 1, 1, 1, 10, 11, 5, 6, 2, 4, 7, 8, 5, 6};
-        int k = 10;
+        int[] nums = new int[]{1, 1, 1, 2, 2, 3};
+        int k = 2;
         int[] results = clazz.topKFrequent(nums, k);
-        assert results.length == 10;
+        assert results.length == 2;
     }
 }

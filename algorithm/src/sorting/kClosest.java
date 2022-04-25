@@ -51,20 +51,11 @@ import java.util.PriorityQueue;
 public class kClosest {
 
     public int[][] kClosest(int[][] points, int k) {
-        PriorityQueue<Element> descQueue = new PriorityQueue<>(k, (o1, o2) -> o2.distanceIn2Squared - o1.distanceIn2Squared);
+        PriorityQueue<Element> descQueue = new PriorityQueue<>(k, (o1, o2) -> o1.distanceIn2Squared - o2.distanceIn2Squared);
         int distanceIn2Squared;
-        Element top;
         for (int[] point : points) {
             distanceIn2Squared = point[0] * point[0] + point[1] * point[1];
-            if (descQueue.size() < k) {
-                descQueue.add(new Element(point, distanceIn2Squared));
-            } else {
-                top = descQueue.peek();
-                if (top.getDistanceIn2Squared() > distanceIn2Squared) {
-                    descQueue.remove();
-                    descQueue.add(new Element(point, distanceIn2Squared));
-                }
-            }
+            descQueue.add(new Element(point, distanceIn2Squared));
         }
         int[][] results = new int[k][2];
         for (int i = 0; i < k; i++) {

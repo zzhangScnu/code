@@ -48,7 +48,7 @@ public class FirstMissingPositive {
         for (int i = 0; i < length; i++) {
             // 如果没有缺失正整数的话，数组下标和元素值的对应关系是：i = nums[i] - 1
             // not if, while
-            // 这里要用值去对比，不能用索引i != nums[i] - 1来对比。否则处理不了诸如 [1, 1] 的情况。TODO: WHY?
+            // 这里要用值去对比，不能用索引i != nums[i] - 1来对比。否则处理不了诸如 [1, 1] 的情况。也就是只有两个数不相同时才需要进行交换，否则换了也没用
             while (nums[i] > 0 && nums[i] <= length && nums[i] != nums[nums[i] - 1]) {
                 // 将i的元素，交换到它应该在的正确下标(nums[i] - 1)上
                 swap(nums, i, nums[i] - 1);

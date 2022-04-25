@@ -1,4 +1,5 @@
-package backtracking;//给定一个整数数组 nums 和一个正整数 k，找出是否有可能把这个数组分成 k 个非空子集，其总和都相等。
+package backtracking;
+//给定一个整数数组 nums 和一个正整数 k，找出是否有可能把这个数组分成 k 个非空子集，其总和都相等。
 //
 // 示例 1：
 //
@@ -15,7 +16,6 @@ package backtracking;//给定一个整数数组 nums 和一个正整数 k，找�
 // 0 < nums[i] < 10000
 //
 // Related Topics 位运算 记忆化搜索 数组 动态规划 回溯 状态压缩
-// 👍 431 👎 0
 
 /**
  * @author lihua
