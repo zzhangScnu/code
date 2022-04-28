@@ -60,12 +60,12 @@ import (
 
 // Convert
 // 字符串长度：n
-// 行数：r
-// 一个周期占多少个字符：p = r + r - 1 - 1 = 2r - 2
-// 一个周期占多少列：c = p - r + 1 = r - 1
+// 行数：s
+// 一个周期占多少个字符：p = s + s - 1 - 1 = 2r - 2
+// 一个周期占多少列：c = p - s + 1 = s - 1
 // 多少个周期：t = n / (2r - 2)，向上取整
 // 多少列：t * c
-// i mod p < r - 1，向下，否则向右上
+// v mod p < s - 1，向下，否则向右上
 func Convert(s string, numRows int) string {
 	if numRows == 1 {
 		return s

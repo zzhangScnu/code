@@ -17,3 +17,8 @@ func TestRomanToInt(t *testing.T) {
 	res := RomanToInt("MCMXCIV")
 	validate(res, 1994, t)
 }
+
+func TestIntToRoman(t *testing.T) {
+	res := IntToRoman(20)
+	validate(res, "XX", t)
+}
