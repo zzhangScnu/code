@@ -29,58 +29,30 @@ package base
 
 import (
 	"math"
-	"strings"
+	"strconv"
 )
 
 func AddBinary(a string, b string) string {
-	intsA, lA := reverseStr(a), len(a)
-	intsB, lB := reverseStr(b), len(b)
-	i, j, k := 0, 0, 0
-	res := make([]int, int(math.Max(float64(lA), float64(lB)))+1)
-	var carry int
-	var sum int
-	for i < lA && j < lB {
-		sum = intsA[i] + intsB[i] + carry
-		res[k], carry = sum%2, sum/2
-		i, j, k = i+1, j+1, k+1
-	}
-	for i < lA {
-		sum = intsA[i] + carry
-		res[k], carry = sum%2, sum/2
-		i, k = i+1, k+1
-	}
-	for j < lB {
-		sum = intsB[j] + carry
-		res[k], carry = sum%2, sum/2
-		j, k = j+1, k+1
-	}
-	for carry == 1 {
-		sum = res[k] + carry
-		res[k], carry = sum%2, sum/2
-		k = k + 1
-	}
-	return reverseInts(res)
-}
-
-func reverseStr(str string) []int {
-	runes := []rune(str)
-	l := len(runes)
-	ints := make([]int, l)
-	for i, j := 0, l-1; i <= j; i, j = i+1, j-1 {
-		ints[i], ints[j] = int(runes[j]-'0'), int(runes[i]-'0')
-	}
-	return ints
-}
-
-func reverseInts(ints []int) string {
+	lA, lB, carry := len(a), len(b), 0
+	lM := int(math.Max(float64(lA), float64(lB))) - 1
+	i := 0
 	var res string
-	for _, v := range ints {
-		res = string(rune(v)+'0') + res
+	for {
+		if i > lM {
+			break
+		}
+		if i < lA {
+			carry += int(a[lA-i-1] - '0')
+		}
+		if i < lB {
+			carry += int(b[lB-i-1] - '0')
+		}
+		i++
+		res = strconv.Itoa(carry%2) + res
+		carry /= 2
 	}
-	res = strings.TrimPrefix(res, "0")
-	if res == "" {
-		return "0"
-	} else {
-		return res
+	if carry != 0 {
+		res = "1" + res
 	}
+	return res
 }
