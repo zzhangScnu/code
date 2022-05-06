@@ -32,7 +32,7 @@ import (
 	"strconv"
 )
 
-func AddBinary(a string, b string) string {
+func AddBinaryNormally(a string, b string) string {
 	lA, lB, carry := len(a), len(b), 0
 	lM := int(math.Max(float64(lA), float64(lB))) - 1
 	i := 0
@@ -55,4 +55,17 @@ func AddBinary(a string, b string) string {
 		res = "1" + res
 	}
 	return res
+}
+
+func AddBinary(a string, b string) string {
+	// 指定字符串为二进制格式为基础，解析为十进制数字。保存无进位相加结果
+	x, _ := strconv.ParseInt(a, 2, 64)
+	// 保存进位
+	y, _ := strconv.ParseInt(b, 2, 64)
+	for y != 0 {
+		sum := x ^ y
+		carry := (x & y) << 1
+		x, y = sum, carry
+	}
+	return strconv.FormatInt(x, 2)
 }
