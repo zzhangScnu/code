@@ -32,3 +32,10 @@ func TestMaxArea(t *testing.T) {
 	structure.Validate(MaxArea([]int{1, 8, 6, 2, 5, 4, 8, 3, 7}), 49, t)
 	structure.Validate(MaxArea([]int{1, 1}), 1, t)
 }
+
+func TestLongestCommonPrefix(t *testing.T) {
+	structure.Validate(LongestCommonPrefix([]string{"flower", "flow", "flight"}), "fl", t)
+	structure.Validate(LongestCommonPrefix([]string{"dog", "racecar", "car"}), "", t)
+	structure.Validate(LongestCommonPrefix([]string{""}), "", t)
+	structure.Validate(LongestCommonPrefix([]string{"a"}), "a", t)
+}
