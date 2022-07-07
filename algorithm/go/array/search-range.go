@@ -61,3 +61,49 @@ func searchRange(nums []int, target int) []int {
 	}
 	return []int{s, e}
 }
+
+func searchRangeOptimize(nums []int, target int) []int {
+	return []int{searchLowRange(nums, target), searchHighRange(nums, target)}
+}
+
+func searchLowRange(nums []int, target int) int {
+	max := len(nums) - 1
+	l, h := 0, max
+	var mid int
+	for l <= h {
+		mid = l + (h-l)>>1
+		if nums[mid] > target {
+			h = mid - 1
+		} else if nums[mid] < target {
+			l = mid + 1
+		} else if nums[mid] == target {
+			if mid == 0 || nums[mid] > nums[mid-1] {
+				return mid
+			} else {
+				h = mid - 1
+			}
+		}
+	}
+	return -1
+}
+
+func searchHighRange(nums []int, target int) int {
+	max := len(nums) - 1
+	l, h := 0, max
+	var mid int
+	for l <= h {
+		mid = l + (h-l)>>1
+		if nums[mid] > target {
+			h = mid - 1
+		} else if nums[mid] < target {
+			l = mid + 1
+		} else if nums[mid] == target {
+			if mid == max || nums[mid] < nums[mid+1] {
+				return mid
+			} else {
+				l = mid + 1
+			}
+		}
+	}
+	return -1
+}
