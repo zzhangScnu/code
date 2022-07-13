@@ -1,7 +1,6 @@
 package dp
 
 import (
-	"math"
 	"sort"
 )
 
@@ -42,8 +41,8 @@ import (
 // dp[i]: i代表0-i个信封中可以套娃的信封数量
 func maxEnvelopesByLis(envelopes [][]int) int {
 	l := len(envelopes)
-	if l == 1 {
-		return 1
+	if l == 0 {
+		return 0
 	}
 	sort.Slice(envelopes, func(i, j int) bool {
 		if envelopes[i][0] == envelopes[j][0] {
@@ -62,7 +61,7 @@ func maxEnvelopesByLis(envelopes [][]int) int {
 		for j := 0; j < i; j++ {
 			// 只要比较高度即可
 			if envelopes[i][1] > envelopes[j][1] {
-				dp[i] = int(math.Max(float64(dp[i]), float64(dp[j]+1)))
+				dp[i] = max(dp[i], dp[j]+1)
 			}
 		}
 		if dp[i] > ans {
@@ -70,4 +69,11 @@ func maxEnvelopesByLis(envelopes [][]int) int {
 		}
 	}
 	return ans
+}
+
+func max(a, b int) int {
+	if a >= b {
+		return a
+	}
+	return b
 }

@@ -1,4 +1,4 @@
-package dp
+package binary_search
 
 import "sort"
 
@@ -36,35 +36,46 @@ import "sort"
 //
 // Related Topics 数组 二分查找 动态规划 排序
 
-// dp[i]: i代表0-i个信封中可以套娃的信封数量(当以i索引的信封做顶时的结果)
-func maxEnvelopesByDp(envelopes [][]int) int {
-	l := len(envelopes)
-	if l == 0 {
+func maxEnvelopesByLis(envelopes [][]int) int {
+	if len(envelopes) == 0 {
 		return 0
 	}
-	// 只需要对第一维进行排序即可
 	sort.Slice(envelopes, func(i, j int) bool {
-		return envelopes[i][0] < envelopes[j][0]
+		x, y := envelopes[i], envelopes[j]
+		return x[0] < y[0] ||
+			x[0] == y[0] && x[1] > y[1]
 	})
-	dp := make([]int, l)
-	ans := 0
-	for i := 0; i < l; i++ {
-		max := 0
-		for j := 0; j < i; j++ {
-			if canPutOn(envelopes[j], envelopes[i]) {
-				if dp[j] > max {
-					max = dp[j]
-				}
-			}
-		}
-		dp[i] = max + 1
-		if dp[i] > ans {
-			ans = dp[i]
+	lis, target := []int{}, 0
+	for _, envelope := range envelopes {
+		target = envelope[1]
+		idx := searchFirstBiggerThan(lis, target)
+		if idx == -1 {
+			continue
+		} else if idx < len(lis) {
+			lis[idx] = target
+		} else {
+			lis = append(lis, target)
 		}
 	}
-	return ans
+	return len(lis)
 }
 
-func canPutOn(e1 []int, e2 []int) bool {
-	return e1[0] < e2[0] && e1[1] < e2[1]
+func searchFirstBiggerThan(lis []int, target int) int {
+	max := len(lis) - 1
+	l, h, m := 0, max, 0
+	for l <= h {
+		m = l + (h-l)>>1
+		if lis[m] < target {
+			l = m + 1
+		} else if lis[m] >= target { //由于最后是用h来判断是否所有元素都小于target，等于的分支需要放在这里，才能合适地移动h
+			if m == 0 || lis[m-1] < target {
+				return m
+			}
+			h = m - 1
+		}
+	}
+	if h == max {
+		return max + 1
+	}
+	return -1
 }
