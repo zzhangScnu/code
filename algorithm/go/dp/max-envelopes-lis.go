@@ -1,6 +1,9 @@
 package dp
 
-import "sort"
+import (
+	"math"
+	"sort"
+)
 
 //给你一个二维整数数组 envelopes ，其中 envelopes[i] = [wi, hi] ，表示第 i 个信封的宽度和高度。
 //
@@ -36,35 +39,35 @@ import "sort"
 //
 // Related Topics 数组 二分查找 动态规划 排序
 
-// dp[i]: i代表0-i个信封中可以套娃的信封数量(当以i索引的信封做顶时的结果)
-func maxEnvelopesByDp(envelopes [][]int) int {
+// dp[i]: i代表0-i个信封中可以套娃的信封数量
+func maxEnvelopesByLis(envelopes [][]int) int {
 	l := len(envelopes)
 	if l == 1 {
 		return 1
 	}
-	// 只需要对第一维进行排序即可
 	sort.Slice(envelopes, func(i, j int) bool {
+		if envelopes[i][0] == envelopes[j][0] {
+			// 宽度相同时，高度按降序排列
+			return envelopes[i][1] > envelopes[j][1]
+		}
 		return envelopes[i][0] < envelopes[j][0]
 	})
+	// 维护一个高度的最长上升子序列
 	dp := make([]int, l)
-	ans := 0
 	for i := 0; i < l; i++ {
-		max := 0
+		dp[i] = 1
+	}
+	ans := 0
+	for i := 1; i < l; i++ {
 		for j := 0; j < i; j++ {
-			if canPutOn(envelopes[j], envelopes[i]) {
-				if dp[j] > max {
-					max = dp[j]
-				}
+			// 只要比较高度即可
+			if envelopes[i][1] > envelopes[j][1] {
+				dp[i] = int(math.Max(float64(dp[i]), float64(dp[j]+1)))
 			}
 		}
-		dp[i] = max + 1
 		if dp[i] > ans {
 			ans = dp[i]
 		}
 	}
 	return ans
-}
-
-func canPutOn(e1 []int, e2 []int) bool {
-	return e1[0] < e2[0] && e1[1] < e2[1]
 }
