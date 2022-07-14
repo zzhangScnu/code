@@ -17,3 +17,9 @@ func TestShipWithinDays(t *testing.T) {
 	structure.Validate(shipWithinDays([]int{3, 2, 2, 4, 1, 4}, 3), 6, t)
 	structure.Validate(shipWithinDays([]int{1, 2, 3, 1, 1}, 4), 3, t)
 }
+
+func TestEatingMinSpeed(t *testing.T) {
+	structure.Validate(minEatingSpeed([]int{3, 6, 7, 11}, 8), 4, t)
+	structure.Validate(minEatingSpeed([]int{30, 11, 23, 4, 20}, 5), 30, t)
+	structure.Validate(minEatingSpeed([]int{30, 11, 23, 4, 20}, 6), 23, t)
+}
