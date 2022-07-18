@@ -23,3 +23,9 @@ func TestEatingMinSpeed(t *testing.T) {
 	structure.Validate(minEatingSpeed([]int{30, 11, 23, 4, 20}, 5), 30, t)
 	structure.Validate(minEatingSpeed([]int{30, 11, 23, 4, 20}, 6), 23, t)
 }
+
+func TestIsSubSequence(t *testing.T) {
+	structure.Validate(isSubsequence("aaaaaa", "bbaaaa"), false, t)
+	structure.Validate(isSubsequence("abc", "ahbgdc"), true, t)
+	structure.Validate(isSubsequence("axc", "ahbgdc"), false, t)
+}
