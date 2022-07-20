@@ -34,3 +34,8 @@ func TestSearchMatrix(t *testing.T) {
 	structure.Validate(searchMatrix([][]int{{1, 3, 5, 7}, {10, 11, 16, 20}, {23, 30, 34, 60}}, 3), true, t)
 	structure.Validate(searchMatrix([][]int{{1, 3, 5, 7}, {10, 11, 16, 20}, {23, 30, 34, 60}}, 13), false, t)
 }
+
+func TestSearchMatrixII(t *testing.T) {
+	structure.Validate(searchMatrixII([][]int{{1, 4, 7, 11, 15}, {2, 5, 8, 12, 19}, {3, 6, 9, 16, 22}, {10, 13, 14, 17, 24}, {18, 21, 23, 26, 30}}, 5), true, t)
+	structure.Validate(searchMatrixII([][]int{{1, 4, 7, 11, 15}, {2, 5, 8, 12, 19}, {3, 6, 9, 16, 22}, {10, 13, 14, 17, 24}, {18, 21, 23, 26, 30}}, 20), false, t)
+}
