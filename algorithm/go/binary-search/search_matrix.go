@@ -36,11 +36,11 @@ package binary_search
 // Related Topics 数组 二分查找 矩阵
 
 func searchMatrix(matrix [][]int, target int) bool {
-	l := len(matrix)
-	lo, hi, mi, val := 0, (l-1)*l+l, 0, 0
+	rowL, colL := len(matrix), len(matrix[0])
+	lo, hi, mi, val := 0, rowL*colL-1, 0, 0
 	for lo <= hi {
 		mi = lo + (hi-lo)>>1
-		val = matrix[mi/l][mi%l]
+		val = matrix[mi/colL][mi%colL] // 这一块二维坐标的推算要注意
 		if val == target {
 			return true
 		} else if val > target {

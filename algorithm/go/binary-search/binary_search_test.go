@@ -33,6 +33,8 @@ func TestIsSubSequence(t *testing.T) {
 func TestSearchMatrix(t *testing.T) {
 	structure.Validate(searchMatrix([][]int{{1, 3, 5, 7}, {10, 11, 16, 20}, {23, 30, 34, 60}}, 3), true, t)
 	structure.Validate(searchMatrix([][]int{{1, 3, 5, 7}, {10, 11, 16, 20}, {23, 30, 34, 60}}, 13), false, t)
+	structure.Validate(searchMatrix([][]int{{1}}, 2), false, t)
+	structure.Validate(searchMatrix([][]int{{1, 3}}, 3), true, t)
 }
 
 func TestSearchMatrixII(t *testing.T) {
