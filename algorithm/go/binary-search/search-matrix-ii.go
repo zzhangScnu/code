@@ -42,7 +42,7 @@ package binary_search
 
 func searchMatrixII(matrix [][]int, target int) bool {
 	// 从左下角开始遍历，行递减，列递增
-	rowL, colL := len(matrix[0]), len(matrix)
+	rowL, colL := len(matrix), len(matrix[0])
 	row, col, val := rowL-1, 0, 0
 	for row >= 0 && col < colL {
 		val = matrix[row][col]
