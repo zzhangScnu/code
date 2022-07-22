@@ -42,3 +42,9 @@ func TestSearchMatrixII(t *testing.T) {
 	structure.Validate(searchMatrixII([][]int{{1, 4, 7, 11, 15}, {2, 5, 8, 12, 19}, {3, 6, 9, 16, 22}, {10, 13, 14, 17, 24}, {18, 21, 23, 26, 30}}, 20), false, t)
 	structure.Validate(searchMatrixII([][]int{{1, 1}}, 0), false, t)
 }
+
+func TestSearchRotate(t *testing.T) {
+	structure.Validate(searchRotate([]int{4, 5, 6, 7, 0, 1, 2}, 0), 4, t)
+	structure.Validate(searchRotate([]int{4, 5, 6, 7, 0, 1, 2}, 3), -1, t)
+	structure.Validate(searchRotate([]int{1}, 0), -1, t)
+}
