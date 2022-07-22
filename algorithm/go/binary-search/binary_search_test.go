@@ -2,6 +2,7 @@ package binary_search
 
 import (
 	"algorithm.com/structure"
+	"fmt"
 	"testing"
 )
 
@@ -52,4 +53,10 @@ func TestSearchRotate(t *testing.T) {
 func TestSearchRotateII(t *testing.T) {
 	structure.Validate(searchRotateII([]int{3, 1, 2, 3, 3, 3, 3}, 2), true, t)
 	structure.Validate(searchRotateII([]int{1, 0, 1, 1, 1}, 0), true, t)
+}
+
+func TestFindPeakElement(t *testing.T) {
+	structure.Validate(findPeakElement([]int{1, 2, 3, 1}), 2, t)
+	structure.Validate(findPeakElement([]int{1}), 0, t)
+	fmt.Println(findPeakElement([]int{1, 2, 1, 3, 5, 6, 4})) // 1 or 5
 }
