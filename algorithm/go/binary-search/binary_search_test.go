@@ -48,3 +48,8 @@ func TestSearchRotate(t *testing.T) {
 	structure.Validate(searchRotate([]int{4, 5, 6, 7, 0, 1, 2}, 3), -1, t)
 	structure.Validate(searchRotate([]int{1}, 0), -1, t)
 }
+
+func TestSearchRotateII(t *testing.T) {
+	structure.Validate(searchRotateII([]int{3, 1, 2, 3, 3, 3, 3}, 2), true, t)
+	structure.Validate(searchRotateII([]int{1, 0, 1, 1, 1}, 0), true, t)
+}
