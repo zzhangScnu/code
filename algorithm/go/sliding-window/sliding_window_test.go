@@ -17,3 +17,8 @@ func TestMinWindow(t *testing.T) {
 	structure.Validate(minWindow("a", "a"), "a", t)
 	structure.Validate(minWindow("a", "aa"), "", t)
 }
+
+func TestFindAnagrams(t *testing.T) {
+	structure.ValidateDeep(findAnagrams("cbaebabacd", "abc"), []int{0, 6}, t)
+	structure.ValidateDeep(findAnagrams("abab", "ab"), []int{0, 1, 2}, t)
+}
