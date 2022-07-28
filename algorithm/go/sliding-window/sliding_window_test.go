@@ -11,3 +11,9 @@ func TestLengthOfLongestSubstring(t *testing.T) {
 	structure.Validate(lengthOfLongestSubstring("pwwkew"), 3, t)
 	structure.Validate(lengthOfLongestSubstring("aab"), 2, t)
 }
+
+func TestMinWindow(t *testing.T) {
+	structure.Validate(minWindow("ADOBECODEBANC", "ABC"), "BANC", t)
+	structure.Validate(minWindow("a", "a"), "a", t)
+	structure.Validate(minWindow("a", "aa"), "", t)
+}
