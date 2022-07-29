@@ -22,3 +22,8 @@ func TestFindAnagrams(t *testing.T) {
 	structure.ValidateDeep(findAnagrams("cbaebabacd", "abc"), []int{0, 6}, t)
 	structure.ValidateDeep(findAnagrams("abab", "ab"), []int{0, 1, 2}, t)
 }
+
+func TestCheckInclusion(t *testing.T) {
+	structure.Validate(checkInclusion("ab", "eidbaooo"), true, t)
+	structure.Validate(checkInclusion("ab", "eidboaoo"), false, t)
+}
