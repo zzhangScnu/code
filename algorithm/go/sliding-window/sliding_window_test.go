@@ -32,3 +32,10 @@ func TestMaxSlidingWindow(t *testing.T) {
 	structure.ValidateDeep(maxSlidingWindow([]int{1, 3, -1, -3, 5, 3, 6, 7}, 3), []int{3, 3, 5, 5, 6, 7}, t)
 	structure.ValidateDeep(maxSlidingWindow([]int{1}, 1), []int{1}, t)
 }
+
+func TestMinOperations(t *testing.T) {
+	structure.Validate(minOperations([]int{1, 1}, 3), -1, t)
+	structure.Validate(minOperations([]int{1, 1, 4, 2, 3}, 5), 2, t)
+	structure.Validate(minOperations([]int{5, 6, 7, 8, 9}, 4), -1, t)
+	structure.Validate(minOperations([]int{3, 2, 20, 1, 1, 3}, 10), 5, t)
+}
