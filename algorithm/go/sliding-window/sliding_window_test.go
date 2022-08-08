@@ -39,3 +39,20 @@ func TestMinOperations(t *testing.T) {
 	structure.Validate(minOperations([]int{5, 6, 7, 8, 9}, 4), -1, t)
 	structure.Validate(minOperations([]int{3, 2, 20, 1, 1, 3}, 10), 5, t)
 }
+
+func TestContainsNearbyDuplicate(t *testing.T) {
+	structure.Validate(containsNearbyDuplicate([]int{1, 2, 3, 1}, 3), true, t)
+	structure.Validate(containsNearbyDuplicate([]int{1, 0, 1, 1}, 1), true, t)
+	structure.Validate(containsNearbyDuplicate([]int{1, 2, 3, 1, 2, 3}, 2), false, t)
+	structure.Validate(containsNearbyDuplicate([]int{0, 1, 2, 3, 2, 5}, 3), true, t)
+	structure.Validate(containsNearbyDuplicate([]int{1, 2, 1}, 0), false, t)
+
+}
+
+func TestContainsNearbyDuplicateMap(t *testing.T) {
+	structure.Validate(containsNearbyDuplicateMap([]int{1, 2, 3, 1}, 3), true, t)
+	structure.Validate(containsNearbyDuplicateMap([]int{1, 0, 1, 1}, 1), true, t)
+	structure.Validate(containsNearbyDuplicateMap([]int{1, 2, 3, 1, 2, 3}, 2), false, t)
+	structure.Validate(containsNearbyDuplicateMap([]int{0, 1, 2, 3, 2, 5}, 3), true, t)
+	structure.Validate(containsNearbyDuplicateMap([]int{1, 2, 1}, 0), false, t)
+}
