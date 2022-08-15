@@ -56,3 +56,8 @@ func TestContainsNearbyDuplicateMap(t *testing.T) {
 	structure.Validate(containsNearbyDuplicateMap([]int{0, 1, 2, 3, 2, 5}, 3), true, t)
 	structure.Validate(containsNearbyDuplicateMap([]int{1, 2, 1}, 0), false, t)
 }
+
+func TestCharacterReplacement(t *testing.T) {
+	structure.Validate(characterReplacement("ABAB", 2), 4, t)
+	structure.Validate(characterReplacement("AABABBA", 1), 4, t)
+}
