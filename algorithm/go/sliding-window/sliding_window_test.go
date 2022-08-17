@@ -67,3 +67,8 @@ func TestLongestSubstring(t *testing.T) {
 	structure.Validate(longestSubstring("ababbc", 2), 5, t)
 	structure.Validate(longestSubstring("ababbc", 2), 5, t)
 }
+
+func TestNumSubarrayProductLessThanK(t *testing.T) {
+	structure.Validate(numSubarrayProductLessThanK([]int{10, 5, 2, 6}, 100), 8, t)
+	structure.Validate(numSubarrayProductLessThanK([]int{1, 2, 3}, 0), 0, t)
+}
