@@ -61,3 +61,9 @@ func TestCharacterReplacement(t *testing.T) {
 	structure.Validate(characterReplacement("ABAB", 2), 4, t)
 	structure.Validate(characterReplacement("AABABBA", 1), 4, t)
 }
+
+func TestLongestSubstring(t *testing.T) {
+	structure.Validate(longestSubstring("aaabb", 3), 3, t)
+	structure.Validate(longestSubstring("ababbc", 2), 5, t)
+	structure.Validate(longestSubstring("ababbc", 2), 5, t)
+}
