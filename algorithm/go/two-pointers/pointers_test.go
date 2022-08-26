@@ -21,3 +21,7 @@ func Test3Sum(t *testing.T) {
 	structure.ValidateDeep(nSum([]int{0, 1, 1}, 3, 0), [][]int{}, t)
 	structure.ValidateDeep(nSum([]int{0, 0, 0, 0}, 3, 0), [][]int{{0, 0, 0}}, t)
 }
+
+func Test3SumSmaller(t *testing.T) {
+	structure.Validate(threeSumSmaller([]int{-2, 0, 1, 3}, 2), 2, t)
+}
