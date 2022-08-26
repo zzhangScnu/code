@@ -25,3 +25,9 @@ func Test3Sum(t *testing.T) {
 func Test3SumSmaller(t *testing.T) {
 	structure.Validate(threeSumSmaller([]int{-2, 0, 1, 3}, 2), 2, t)
 }
+
+func TestThreeSumCloset(t *testing.T) {
+	structure.Validate(threeSumClosest([]int{-1, 2, 1, -4}, 1), 2, t)
+	structure.Validate(threeSumClosest([]int{0, 0, 0}, 1), 0, t)
+	structure.Validate(threeSumClosest([]int{1, 1, 1, 1}, 0), 3, t)
+}
