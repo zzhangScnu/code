@@ -31,3 +31,8 @@ func TestThreeSumCloset(t *testing.T) {
 	structure.Validate(threeSumClosest([]int{0, 0, 0}, 1), 0, t)
 	structure.Validate(threeSumClosest([]int{1, 1, 1, 1}, 0), 3, t)
 }
+
+func TestRemoveDuplicates(t *testing.T) {
+	structure.Validate(removeDuplicates([]int{1, 1, 2}), 2, t)
+	structure.Validate(removeDuplicates([]int{0, 0, 1, 1, 1, 2, 2, 3, 3, 4}), 5, t)
+}
