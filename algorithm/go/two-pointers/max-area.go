@@ -1,3 +1,5 @@
+package two_pointers
+
 //给定一个长度为 n 的整数数组 height 。有 n 条垂线，第 i 条线的两个端点是 (i, 0) 和 (i, height[i]) 。
 //
 // 找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。
@@ -33,23 +35,33 @@
 // 2 <= n <= 10⁵
 // 0 <= height[i] <= 10⁴
 //
-// Related Topics 贪心 数组 双指针 👍 3476 👎 0
+// Related Topics 贪心 数组 双指针
 
-package base
-
-import "math"
-
-func MaxArea(height []int) int {
-	length := len(height)
-	l, r, minHeight, maxArea := 0, length-1, 0, 0
+func maxArea(height []int) int {
+	l, r := 0, len(height)-1
+	res := 0
 	for l < r {
-		minHeight = int(math.Min(float64(height[l]), float64(height[r])))
-		maxArea = int(math.Max(float64(maxArea), float64((r-l)*minHeight)))
-		if minHeight == height[l] {
+		h := min(height[l], height[r])
+		res = max(h*(r-l), res)
+		if height[l] < height[r] {
 			l++
 		} else {
 			r--
 		}
 	}
-	return maxArea
+	return res
+}
+
+func min(x, y int) int {
+	if x < y {
+		return x
+	}
+	return y
+}
+
+func max(x, y int) int {
+	if x < y {
+		return y
+	}
+	return x
 }
