@@ -48,3 +48,8 @@ func TestAdvantageCountBySort(t *testing.T) {
 	structure.ValidateDeep(advantageCount([]int{12, 24, 8, 32}, []int{13, 25, 32, 11}), []int{24, 32, 8, 12}, t)
 	structure.ValidateDeep(advantageCountBySort([]int{2, 0, 4, 1, 2}, []int{1, 3, 0, 0, 2}), []int{2, 0, 2, 1, 4}, t) // []int{2, 4, 2, 1, 0}也可以
 }
+
+func TestTrap(t *testing.T) {
+	structure.Validate(trap([]int{0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1}), 6, t)
+	structure.Validate(trap([]int{4, 2, 0, 3, 2, 5}), 9, t)
+}
