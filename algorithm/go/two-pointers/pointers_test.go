@@ -65,3 +65,11 @@ func TestIntervalIntersection(t *testing.T) {
 	structure.ValidateDeep(intervalIntersection([][]int{{1, 3}, {5, 9}}, [][]int{}), [][]int{}, t)
 	structure.ValidateDeep(intervalIntersection([][]int{{1, 7}}, [][]int{{3, 10}}), [][]int{{3, 7}}, t)
 }
+
+func TestMerge(t *testing.T) {
+	structure.ValidateDeep(merge([][]int{{1, 3}, {2, 6}, {8, 10}, {15, 18}}), [][]int{{1, 6}, {8, 10}, {15, 18}}, t)
+	structure.ValidateDeep(merge([][]int{{1, 4}, {4, 5}}), [][]int{{1, 5}}, t)
+	structure.ValidateDeep(merge([][]int{{1, 3}}), [][]int{{1, 3}}, t)
+	structure.ValidateDeep(merge([][]int{{1, 4}, {5, 6}}), [][]int{{1, 4}, {5, 6}}, t)
+	structure.ValidateDeep(merge([][]int{{1, 4}, {0, 2}, {3, 5}}), [][]int{{0, 5}}, t)
+}
