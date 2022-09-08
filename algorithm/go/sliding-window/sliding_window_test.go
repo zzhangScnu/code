@@ -71,4 +71,12 @@ func TestLongestSubstring(t *testing.T) {
 func TestNumSubarrayProductLessThanK(t *testing.T) {
 	structure.Validate(numSubarrayProductLessThanK([]int{10, 5, 2, 6}, 100), 8, t)
 	structure.Validate(numSubarrayProductLessThanK([]int{1, 2, 3}, 0), 0, t)
+	structure.Validate(numSubarrayProductLessThanK([]int{1, 1, 1}, 2), 6, t)
+}
+
+func TestContainsNearbyAlmostDuplicateIII(t *testing.T) {
+	//structure.Validate(containsNearbyAlmostDuplicate([]int{1, 2, 3, 1}, 3, 0), true, t)
+	//structure.Validate(containsNearbyAlmostDuplicate([]int{1, 0, 1, 1}, 1, 2), true, t)
+	//structure.Validate(containsNearbyAlmostDuplicate([]int{1, 5, 9, 1, 5, 9}, 2, 3), false, t)
+	structure.Validate(containsNearbyAlmostDuplicate([]int{2147483647, -1, 2147483647}, 1, 2147483647), false, t)
 }
