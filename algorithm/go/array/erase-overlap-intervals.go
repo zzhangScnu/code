@@ -49,23 +49,19 @@ func eraseOverlapIntervals(intervals [][]int) int {
 	if l == 1 {
 		return 0
 	}
-	sort.Slice(intervals, func(i, j int) bool {
-		if intervals[i][0] == intervals[j][0] {
-			return intervals[i][1] < intervals[j][1]
-		}
-		return intervals[i][0] < intervals[j][0]
+	sort.Slice(intervals, func(i, j int) bool { // 按结束时间排序，把buffer尽可能多地留给后来者
+		return intervals[i][1] < intervals[j][1]
 	})
-	res := [][]int{{intervals[0][0], intervals[0][1]}}
+	preR := intervals[0][1]
+	res := 1 // i从1开始，即索引为0的区间已经算进结果集了
 	i := 1
 	for i < l {
-		a := res[len(res)-1]
-		a1, a2 := a[0], a[1]
-		b1, b2 := intervals[i][0], intervals[i][1]
-		i++
-		if b1 >= a1 && b1 < a2 { // 注意这个条件，[1, 2][2, 3]不算重叠
-			continue
+		postL := intervals[i][0]
+		if postL >= preR { // 注意这个条件，[1, 2][2, 3]不算重叠
+			preR = intervals[i][1]
+			res++
 		}
-		res = append(res, []int{b1, b2})
+		i++
 	}
-	return len(intervals) - len(res)
+	return len(intervals) - res
 }
