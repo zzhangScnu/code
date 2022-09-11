@@ -37,8 +37,7 @@ import . "algorithm.com/structure"
 // Related Topics 链表
 
 func reverseBetween(head *ListNode, left int, right int) *ListNode {
-	dummy := &ListNode{Next: head}
-	pre, r := findNodes(dummy, left-1, right)
+	pre, r := findNodes(head, left-1, right)
 	l, nxt := pre.Next, r.Next
 	reversedHead := reverseBetweenNode(l, r)
 	// 衔接右半部分
@@ -48,17 +47,19 @@ func reverseBetween(head *ListNode, left int, right int) *ListNode {
 	if nxt == nil {
 		return reversedHead
 	}
-	return dummy.Next
+	return head
 }
 
 func findNodes(head *ListNode, left int, right int) (*ListNode, *ListNode) {
-	step := 0
+	step := 1
 	p := head
 	var l, r *ListNode
 	for step < right {
 		if step == left {
 			l = p
 		}
+		step++
+		p = p.Next
 	}
 	r = p
 	return l, r
