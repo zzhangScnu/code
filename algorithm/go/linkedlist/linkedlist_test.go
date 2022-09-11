@@ -21,3 +21,9 @@ func TestMergeKSortedLists(t *testing.T) {
 	fmt.Printf("expect: %v", expectVal)
 	fmt.Printf("actual: %v", mergeKSortedLists(param))
 }
+
+func TestReverseList(t *testing.T) {
+	param := &ListNode{Val: 1, Next: &ListNode{Val: 2, Next: &ListNode{Val: 3, Next: &ListNode{Val: 4, Next: &ListNode{Val: 5, Next: nil}}}}}
+	res := reverseIterating(param)
+	fmt.Printf("%v", res)
+}

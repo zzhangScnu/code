@@ -50,8 +50,8 @@ func reverseList(head *ListNode) *ListNode {
 
 // 定义：递归地翻转链表，返回处理后的头节点
 func reverseRecursively(head *ListNode) *ListNode {
-	if head == nil {
-		return nil
+	if head == nil || head.Next == nil { // 防止下面[head.Next.Next = head]panic
+		return head
 	}
 	newHead := reverseRecursively(head.Next)
 	head.Next.Next = head
@@ -59,17 +59,33 @@ func reverseRecursively(head *ListNode) *ListNode {
 	return newHead
 }
 
+//func reverseIterating(head *ListNode) *ListNode {
+//	if head == nil {
+//		return nil
+//	}
+//	var pre *ListNode
+//	cur := head
+//	for cur != nil { // 这里要以nxt做判断，否则这样写，到最后cur会指向nil(nxt)
+//		nxt := cur.Next
+//		cur.Next = pre
+//		pre = cur
+//		cur = nxt
+//	}
+//	return cur
+//}
+
 func reverseIterating(head *ListNode) *ListNode {
-	dummy := &ListNode{Next: head}
-	pre, cur := dummy, dummy.Next
-	for cur != nil {
-		nxt := cur.Next
+	if head == nil {
+		return nil
+	}
+	var pre *ListNode
+	cur, nxt := head, head.Next
+	for nxt != nil {
 		cur.Next = pre
 		pre = cur
 		cur = nxt
+		nxt = nxt.Next
 	}
-	if pre == dummy {
-		return nil
-	}
-	return pre
+	cur.Next = pre
+	return cur
 }
