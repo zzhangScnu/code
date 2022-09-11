@@ -29,8 +29,9 @@ func TestReverseList(t *testing.T) {
 }
 
 func TestReverseBetween(t *testing.T) {
-	param := &ListNode{Val: 1, Next: &ListNode{Val: 2, Next: &ListNode{Val: 3, Next: &ListNode{Val: 4, Next: &ListNode{Val: 5, Next: nil}}}}}
-	// [1,4,3,2,5]
-	res := reverseBetween(param, 2, 4)
+	param := &ListNode{Val: 1, Next: &ListNode{Val: 2, Next: &ListNode{Val: 3, Next: nil}}}
+	res := reverseBetween(param, 1, 2)
+	res2 := reverseBetween(param, 2, 3)
 	fmt.Printf("%+v", res)
+	fmt.Printf("%+v", res2)
 }

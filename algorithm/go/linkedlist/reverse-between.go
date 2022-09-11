@@ -37,21 +37,25 @@ import . "algorithm.com/structure"
 // Related Topics 链表
 
 func reverseBetween(head *ListNode, left int, right int) *ListNode {
-	pre, r := findNodes(head, left-1, right)
+	dummy := &ListNode{Next: head}
+	if left == right { // 只反转一个节点，等于没有区别
+		return head
+	}
+	pre, r := findNodes(dummy, left-1, right) // 虚拟节点保证pre不会指向nil
 	l, nxt := pre.Next, r.Next
 	reversedHead := reverseBetweenNode(l, r)
 	// 衔接右半部分
 	pre.Next.Next = nxt
 	// 衔接左半部分
 	pre.Next = reversedHead
-	if nxt == nil {
+	if pre == dummy && nxt == nil { // 整条链表都反转了
 		return reversedHead
 	}
-	return head
+	return dummy.Next
 }
 
 func findNodes(head *ListNode, left int, right int) (*ListNode, *ListNode) {
-	step := 1
+	step := 0 // 虽然题目的区间索引以1开始，但由于有虚拟节点，这里是0
 	p := head
 	var l, r *ListNode
 	for step < right {
