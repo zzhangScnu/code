@@ -78,3 +78,24 @@ func reverseBetweenNode(left *ListNode, right *ListNode) *ListNode {
 	left.Next.Next = left
 	return newHead
 }
+
+// 相当于反转从left（从1开始）开始的right个节点
+func reverseBetween2(head *ListNode, left int, right int) *ListNode {
+	if left == 1 {
+		return reverseN(head, right)
+	}
+	head.Next = reverseBetween2(head.Next, left-1, right-1)
+	return head
+}
+
+var nxt *ListNode
+
+func reverseN(head *ListNode, n int) *ListNode {
+	if n == 1 {
+		return head
+	}
+	newHead := reverseN(head.Next, n-1)
+	head.Next.Next = head
+	head.Next = nxt
+	return newHead
+}
