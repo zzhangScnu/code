@@ -24,7 +24,7 @@ func TestMergeKSortedLists(t *testing.T) {
 
 func TestReverseList(t *testing.T) {
 	param := &ListNode{Val: 1, Next: &ListNode{Val: 2, Next: &ListNode{Val: 3, Next: &ListNode{Val: 4, Next: &ListNode{Val: 5, Next: nil}}}}}
-	res := reverseIterating(param)
+	res := reverseIterating1(param)
 	fmt.Printf("%v", res)
 }
 
@@ -34,4 +34,10 @@ func TestReverseBetween(t *testing.T) {
 	res2 := reverseBetween(param, 2, 3)
 	fmt.Printf("%+v", res)
 	fmt.Printf("%+v", res2)
+}
+
+func TestReverseKGroup(t *testing.T) {
+	param := &ListNode{Val: 1, Next: &ListNode{Val: 2, Next: &ListNode{Val: 3, Next: &ListNode{Val: 4, Next: &ListNode{Val: 5, Next: nil}}}}}
+	res := reverseKGroup(param, 2)
+	fmt.Printf("%+v", res)
 }

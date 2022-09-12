@@ -59,20 +59,17 @@ func reverseRecursively(head *ListNode) *ListNode {
 	return newHead
 }
 
-//func reverseIterating(head *ListNode) *ListNode {
-//	if head == nil {
-//		return nil
-//	}
-//	var pre *ListNode
-//	cur := head
-//	for cur != nil { // 这里要以nxt做判断，否则这样写，到最后cur会指向nil(nxt)
-//		nxt := cur.Next
-//		cur.Next = pre
-//		pre = cur
-//		cur = nxt
-//	}
-//	return cur
-//}
+func reverseIterating1(head *ListNode) *ListNode {
+	var pre *ListNode
+	cur := head
+	for cur != nil {
+		nxt := cur.Next
+		cur.Next = pre
+		pre = cur
+		cur = nxt
+	}
+	return pre
+}
 
 func reverseIterating(head *ListNode) *ListNode {
 	if head == nil {
@@ -80,7 +77,7 @@ func reverseIterating(head *ListNode) *ListNode {
 	}
 	var pre *ListNode
 	cur, nxt := head, head.Next
-	for nxt != nil {
+	for nxt != nil { // 这里要以nxt做判断，否则这样写，到最后cur会指向nil(nxt)
 		cur.Next = pre
 		pre = cur
 		cur = nxt
