@@ -41,3 +41,21 @@ func TestReverseKGroup(t *testing.T) {
 	res := reverseKGroup(param, 2)
 	fmt.Printf("%+v", res)
 }
+
+func TestPrintLinkedListReversely(t *testing.T) {
+	param := &ListNode{Val: 1, Next: &ListNode{Val: 2, Next: &ListNode{Val: 3, Next: &ListNode{Val: 4, Next: &ListNode{Val: 5, Next: nil}}}}}
+	traverseByPrint(param)
+}
+
+func traverseByPrint(p *ListNode) {
+	if p == nil {
+		return
+	}
+	traverseByPrint(p.Next)
+	fmt.Print(p.Val)
+}
+
+func TestIsPalindrome(t *testing.T) {
+	param := &ListNode{Val: 1, Next: &ListNode{Val: 2, Next: &ListNode{Val: 2, Next: &ListNode{Val: 1, Next: nil}}}}
+	Validate(isPalindrome2(param), true, t)
+}
