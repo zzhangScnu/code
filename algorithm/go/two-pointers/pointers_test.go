@@ -92,3 +92,7 @@ func TestDeleteDuplicateII(t *testing.T) {
 	fmt.Printf("%+v", expected)
 	fmt.Printf("%+v", deleteDuplicatesII(param))
 }
+
+func TestLongestPalindrome(t *testing.T) {
+	Validate(longestPalindrome("babad"), "bab", t)
+}
