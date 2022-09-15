@@ -75,8 +75,12 @@ func TestMerge(t *testing.T) {
 }
 
 func TestIsPalindrome(t *testing.T) {
-	//Validate(isPalindrome("A man, a plan, a canal: Panama"), true, t)
-	//Validate(isPalindrome("race a car"), false, t)
-	//Validate(isPalindrome(".,"), true, t)
+	Validate(isPalindrome("A man, a plan, a canal: Panama"), true, t)
+	Validate(isPalindrome("race a car"), false, t)
+	Validate(isPalindrome(".,"), true, t)
 	Validate(isPalindrome("0P"), false, t)
+}
+
+func TestFindContinuousSequence(t *testing.T) {
+	ValidateDeep(findContinuousSequence(9), [][]int{{2, 3, 4}, {4, 5}}, t)
 }
