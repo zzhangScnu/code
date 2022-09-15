@@ -2,6 +2,7 @@ package two_pointers
 
 import (
 	. "algorithm.com/structure"
+	"fmt"
 	"testing"
 )
 
@@ -83,4 +84,11 @@ func TestIsPalindrome(t *testing.T) {
 
 func TestFindContinuousSequence(t *testing.T) {
 	ValidateDeep(findContinuousSequence(9), [][]int{{2, 3, 4}, {4, 5}}, t)
+}
+
+func TestDeleteDuplicateII(t *testing.T) {
+	param := &ListNode{Val: 1, Next: &ListNode{Val: 2, Next: &ListNode{Val: 3, Next: &ListNode{Val: 3, Next: &ListNode{Val: 4, Next: &ListNode{Val: 4, Next: &ListNode{Val: 5, Next: nil}}}}}}}
+	expected := &ListNode{Val: 1, Next: &ListNode{Val: 2, Next: &ListNode{Val: 5, Next: nil}}}
+	fmt.Printf("%+v", expected)
+	fmt.Printf("%+v", deleteDuplicatesII(param))
 }
