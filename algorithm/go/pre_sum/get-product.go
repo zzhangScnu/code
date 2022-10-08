@@ -64,7 +64,7 @@ func Constructor2() ProductOfNumbers {
 	return ProductOfNumbers{}
 }
 
-func (this *ProductOfNumbers) Add(num int) {
+func (this *ProductOfNumbers) Add1(num int) {
 	for i := 0; i < this.length; i++ {
 		this.product[i] *= num
 	}
@@ -72,6 +72,32 @@ func (this *ProductOfNumbers) Add(num int) {
 	this.length = len(this.product)
 }
 
-func (this *ProductOfNumbers) GetProduct(k int) int {
+func (this *ProductOfNumbers) GetProduct1(k int) int {
 	return this.product[this.length-k]
+}
+
+// Constructor3 每次添加元素只需要乘一次的做法
+func Constructor3() ProductOfNumbers {
+	return ProductOfNumbers{
+		product: []int{1},
+		length:  1,
+	}
+}
+
+func (this *ProductOfNumbers) Add(num int) {
+	if num == 0 {
+		this.product = []int{1}
+		this.length = 1
+		return
+	}
+	next := this.product[this.length-1] * num
+	this.product = append(this.product, next)
+	this.length += 1
+}
+
+func (this *ProductOfNumbers) GetProduct(k int) int {
+	if k > this.length-1 { // 因为最开始的1的存在，数组长度最多会比实际添加的元素长度大1。如果k不足数组中的实际长度，证明前面的元素里有0
+		return 0
+	}
+	return this.product[this.length-1] / this.product[this.length-k-1]
 }
