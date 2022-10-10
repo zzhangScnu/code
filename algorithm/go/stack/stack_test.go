@@ -23,3 +23,12 @@ func TestMinInsertions(t *testing.T) {
 	Validate(minInsertions("(((((("), 12, t)
 	Validate(minInsertions(")))))))"), 5, t)
 }
+
+func TestLongestValidParentheses(t *testing.T) {
+	Validate(longestValidParentheses("()(())"), 6, t)
+	Validate(longestValidParentheses("(()"), 2, t)
+	Validate(longestValidParentheses(")()())"), 4, t)
+	Validate(longestValidParentheses(""), 0, t)
+	Validate(longestValidParentheses("("), 0, t)
+	Validate(longestValidParentheses(")())()()"), 4, t)
+}
