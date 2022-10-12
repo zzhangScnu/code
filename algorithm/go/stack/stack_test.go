@@ -32,3 +32,8 @@ func TestLongestValidParentheses(t *testing.T) {
 	Validate(longestValidParentheses("("), 0, t)
 	Validate(longestValidParentheses(")())()()"), 4, t)
 }
+
+func TestSimplifyTest(t *testing.T) {
+	Validate(simplifyPath("/a/./b/../../c/"), "/c", t)
+	Validate(simplifyPath("/home//foo/"), "/home/foo", t)
+}
