@@ -18,3 +18,10 @@ func TestLevelOrder(t *testing.T) {
 	res := levelOrder(root)
 	fmt.Println(res)
 }
+
+func TestZigzagLevelOrder(t *testing.T) {
+	root := BuildRoot([]string{"3", "9", "20", "null", "null", "15", "7"})
+	res := zigzagLevelOrder(root) // [[3],[20,9],[15,7]]
+	fmt.Println(res)
+
+}
