@@ -30,3 +30,12 @@ func TestMaxDepth(t *testing.T) {
 	res := maxDepth(root)
 	Validate(res, 3, t)
 }
+
+func TestDiameterOfBinaryTree(t *testing.T) {
+	root := BuildRoot([]string{"1", "2", "3", "4", "5"})
+	res := diameterOfBinaryTree(root)
+	Validate(res, 3, t)
+	//root := BuildRoot([]string{"1", "2"})
+	//res := diameterOfBinaryTree(root)
+	//Validate(res, 1, t)
+}
