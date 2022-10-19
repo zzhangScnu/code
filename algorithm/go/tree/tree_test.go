@@ -39,3 +39,9 @@ func TestDiameterOfBinaryTree(t *testing.T) {
 	//res := diameterOfBinaryTree(root)
 	//Validate(res, 1, t)
 }
+
+func TestConstructTreeFromInorderPostOrder(t *testing.T) {
+	root1 := buildTree([]int{3, 9, 20, 15, 7}, []int{9, 3, 15, 20, 7})
+	root2 := buildTree([]int{-1}, []int{-1})
+	fmt.Println(root1, root2)
+}
