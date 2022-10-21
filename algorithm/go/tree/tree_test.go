@@ -51,3 +51,9 @@ func TestBuildTreeFromInorderPostOrder(t *testing.T) {
 	root2 := buildTreeFromInorderPostOrder([]int{-1}, []int{-1})
 	fmt.Println(root1, root2)
 }
+
+func TestLevelOrderBottom(t *testing.T) {
+	root := BuildRoot([]string{"3", "9", "20", "null", "null", "15", "7"})
+	res := levelOrderBottom(root)
+	fmt.Println(res)
+}
