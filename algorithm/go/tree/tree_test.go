@@ -45,3 +45,9 @@ func TestConstructTreeFromInorderPostOrder(t *testing.T) {
 	root2 := buildTree([]int{-1}, []int{-1})
 	fmt.Println(root1, root2)
 }
+
+func TestBuildTreeFromInorderPostOrder(t *testing.T) {
+	root1 := buildTreeFromInorderPostOrder([]int{9, 3, 15, 20, 7}, []int{9, 15, 7, 20, 3})
+	root2 := buildTreeFromInorderPostOrder([]int{-1}, []int{-1})
+	fmt.Println(root1, root2)
+}
