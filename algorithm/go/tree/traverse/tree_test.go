@@ -2,6 +2,7 @@ package traverse
 
 import (
 	. "algorithm.com/structure"
+	"fmt"
 	"testing"
 )
 
@@ -27,4 +28,17 @@ func TestPostOrderTraversal(t *testing.T) {
 	ValidateDeep(traversePostOrderRecursively(root), expected, t)
 	ValidateDeep(traversePostOrderDp(root), expected, t)
 	ValidateDeep(traversePostOrderByIterator(root), expected, t)
+}
+
+func TestBuildNaryTree(t *testing.T) {
+	root := BuildNaryRoot([]string{"1", "null", "3", "2", "4", "null", "5", "6"})
+	fmt.Println(root)
+}
+
+func TestPreOrderTraversalNary(t *testing.T) {
+	root := BuildNaryRoot([]string{"1", "null", "3", "2", "4", "null", "5", "6"})
+	expected := []int{1, 3, 5, 6, 2, 4}
+	ValidateDeep(traverseNaryRecursively(root), expected, t)
+	ValidateDeep(traverseNaryByDp(root), expected, t)
+	ValidateDeep(traverseNaryByIterator(root), expected, t)
 }
