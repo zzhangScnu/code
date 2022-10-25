@@ -20,3 +20,11 @@ func TestInOrderTraversal(t *testing.T) {
 	ValidateDeep(traverseInOrderDp(root), expected, t)
 	ValidateDeep(traverseInOrderByIterator(root), expected, t)
 }
+
+func TestPostOrderTraversal(t *testing.T) {
+	root := BuildRoot([]string{"3", "9", "20", "null", "null", "15", "7"})
+	expected := []int{9, 15, 7, 20, 3}
+	ValidateDeep(traversePostOrderRecursively(root), expected, t)
+	ValidateDeep(traversePostOrderDp(root), expected, t)
+	ValidateDeep(traversePostOrderByIterator(root), expected, t)
+}
