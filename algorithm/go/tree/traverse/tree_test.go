@@ -51,6 +51,26 @@ func TestPostOrderTraversalNary(t *testing.T) {
 	ValidateDeep(traverseNaryPostOrderByIterator(root), expected, t)
 }
 
+func TestLevelOrder(t *testing.T) {
+	//	root := BuildRoot([]string{"3", "9", "20", "null", "null", "15", "7"})
+	//	res := levelOrder(root)
+	root := BuildRoot([]string{"1", "2", "3", "4", "5"})
+	res := levelOrder(root)
+	fmt.Println(res)
+}
+
+func TestLevelOrderBottom(t *testing.T) {
+	root := BuildRoot([]string{"3", "9", "20", "null", "null", "15", "7"})
+	res := levelOrderBottom(root)
+	fmt.Println(res)
+}
+
+func TestZigzagLevelOrder(t *testing.T) {
+	root := BuildRoot([]string{"3", "9", "20", "null", "null", "15", "7"})
+	res := zigzagLevelOrder(root) // [[3],[20,9],[15,7]]
+	fmt.Println(res)
+}
+
 func TestLevelOrderTraversalNary(t *testing.T) {
 	root := BuildNaryRoot([]string{"1", "null", "3", "2", "4", "null", "5", "6"})
 	expected := [][]int{{1}, {3, 2, 4}, {5, 6}}

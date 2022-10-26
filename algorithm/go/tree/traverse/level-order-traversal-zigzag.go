@@ -1,11 +1,11 @@
-package tree
+package traverse
 
 import (
 	. "algorithm.com/structure"
 	"container/list"
 )
 
-//给你二叉树的根节点 root ，返回其节点值 自底向上的层序遍历 。 （即按从叶子节点所在层到根节点所在的层，逐层从左向右遍历）
+//给你二叉树的根节点 root ，返回其节点值的 锯齿形层序遍历 。（即先从左往右，再从右往左进行下一层遍历，以此类推，层与层之间交替进行）。
 //
 //
 //
@@ -13,7 +13,7 @@ import (
 //
 //
 //输入：root = [3,9,20,null,null,15,7]
-//输出：[[15,7],[9,20],[3]]
+//输出：[[3],[20,9],[15,7]]
 //
 //
 // 示例 2：
@@ -36,26 +36,31 @@ import (
 //
 //
 // 树中节点数目在范围 [0, 2000] 内
-// -1000 <= Node.val <= 1000
+// -100 <= Node.val <= 100
 //
 //
 // Related Topics 树 广度优先搜索 二叉树
 
-func levelOrderBottom(root *TreeNode) [][]int {
+func zigzagLevelOrder(root *TreeNode) [][]int {
+	res := [][]int{}
 	if root == nil {
-		return [][]int{}
+		return res
 	}
-	var res [][]int
 	queue := list.New()
 	queue.PushBack(root)
+	ltr := true // left to right flag
 	for queue.Len() != 0 {
+		size := queue.Len()
 		var levelRes []int
-		levelSize := queue.Len() // 不能放在for里面，否则每次都会重新获取
-		for i := 0; i < levelSize; i++ {
+		for i := 0; i < size; i++ {
 			e := queue.Front()
 			queue.Remove(e)
 			node := e.Value.(*TreeNode)
-			levelRes = append(levelRes, node.Val)
+			if ltr {
+				levelRes = append(levelRes, node.Val)
+			} else {
+				levelRes = append([]int{node.Val}, levelRes...)
+			}
 			if node.Left != nil {
 				queue.PushBack(node.Left)
 			}
@@ -63,7 +68,8 @@ func levelOrderBottom(root *TreeNode) [][]int {
 				queue.PushBack(node.Right)
 			}
 		}
-		res = append([][]int{levelRes}, res...)
+		res = append(res, levelRes)
+		ltr = !ltr
 	}
 	return res
 }
