@@ -50,3 +50,9 @@ func TestPostOrderTraversalNary(t *testing.T) {
 	ValidateDeep(traverseNaryPostOrderByDp(root), expected, t)
 	ValidateDeep(traverseNaryPostOrderByIterator(root), expected, t)
 }
+
+func TestLevelOrderTraversalNary(t *testing.T) {
+	root := BuildNaryRoot([]string{"1", "null", "3", "2", "4", "null", "5", "6"})
+	expected := [][]int{{1}, {3, 2, 4}, {5, 6}}
+	ValidateDeep(levelOrderNary(root), expected, t)
+}
