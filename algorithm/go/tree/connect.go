@@ -95,13 +95,16 @@ func connect(root *NextNode) *NextNode {
 	if root == nil {
 		return nil
 	}
-	left := connect(root.Left)
-	right := connect(root.Right)
-	if left != nil {
-		left.Next = right
-		if left.Right != nil && right != nil {
-			left.Right.Next = right.Left
-		}
-	}
+	doConnect(root.Left, root.Right)
 	return root
+}
+
+func doConnect(n1, n2 *NextNode) {
+	if n1 == nil || n2 == nil {
+		return
+	}
+	n1.Next = n2
+	doConnect(n1.Left, n1.Right)
+	doConnect(n2.Left, n2.Right)
+	doConnect(n1.Right, n2.Left)
 }
