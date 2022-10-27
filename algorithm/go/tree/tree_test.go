@@ -72,3 +72,12 @@ func TestFlatten(t *testing.T) {
 	flatten(root2)
 	fmt.Println(root2)
 }
+
+func TestConnect(t *testing.T) {
+	//root := BuildNextTreeRoot([]string{"1", "2", "3", "4", "5", "6", "7"})
+	//res := connectByLevelOrderTraversal(root)
+	//fmt.Println(res)
+	root2 := BuildNextTreeRoot([]string{"1", "2", "3", "4", "5", "6", "7"})
+	res2 := connect(root2)
+	fmt.Println(res2)
+}
