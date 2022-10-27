@@ -17,6 +17,14 @@ func TestMaxDepth(t *testing.T) {
 	Validate(res, 3, t)
 }
 
+func TestMinDepth(t *testing.T) {
+	root := BuildRoot([]string{"1", "2", "3", "4", "5"})
+	res := minDepth(root)
+	Validate(res, 2, t)
+	resByLevelOrder := minDepthByLevelOrder(root)
+	Validate(resByLevelOrder, 2, t)
+}
+
 func TestMaxDepthNary(t *testing.T) {
 	root := BuildNaryRoot([]string{"1", "null", "3", "2", "4", "null", "5", "6"})
 	res := maxDepthNary(root)
