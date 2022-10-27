@@ -81,3 +81,9 @@ func TestConnect(t *testing.T) {
 	res2 := connect(root2)
 	fmt.Println(res2)
 }
+
+func TestInvertTree(t *testing.T) {
+	root := BuildRoot([]string{"2", "1", "3"})
+	res := invertTree(root)
+	fmt.Println(res)
+}
