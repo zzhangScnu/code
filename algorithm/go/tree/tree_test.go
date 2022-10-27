@@ -58,3 +58,17 @@ func TestConstructFromPrePost(t *testing.T) {
 	root := constructFromPrePost([]int{1, 2, 4, 5, 3, 6, 7}, []int{4, 5, 2, 6, 7, 3, 1})
 	fmt.Println(root)
 }
+
+func TestFlatten(t *testing.T) {
+	root := BuildRoot([]string{"1", "2", "5", "3", "4", "null", "6"})
+	flatten(root)
+	fmt.Println(root)
+	root2 := BuildRoot([]string{"1", "null", "2"})
+	p := root2
+	for p.Right != nil {
+		p = p.Right
+	}
+	p.Left = &TreeNode{Val: 3}
+	flatten(root2)
+	fmt.Println(root2)
+}
