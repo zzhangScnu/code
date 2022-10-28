@@ -87,3 +87,9 @@ func TestInvertTree(t *testing.T) {
 	res := invertTree(root)
 	fmt.Println(res)
 }
+
+func TestCountNodes(t *testing.T) {
+	root := BuildRoot([]string{"1", "2", "3", "4", "5", "6"})
+	res := countNodes(root)
+	Validate(res, 6, t)
+}
