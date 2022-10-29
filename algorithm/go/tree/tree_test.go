@@ -93,3 +93,11 @@ func TestCountNodes(t *testing.T) {
 	res := countNodes(root)
 	Validate(res, 6, t)
 }
+
+func TestSerializeAndDeserialize(t *testing.T) {
+	str := "1,2,3,null,null,4,5,6,7,null,null,null,null,null,null"
+	c := Constructor()
+	root := c.deserialize(str)
+	res := c.serialize(root)
+	Validate(res, str, t)
+}
