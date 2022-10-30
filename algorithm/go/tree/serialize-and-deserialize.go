@@ -131,3 +131,52 @@ func parseNode(idx int, values []string) *TreeNode {
 	val, _ := strconv.Atoi(valStr)
 	return &TreeNode{Val: val}
 }
+
+// CodecRecursively 先序和后序都可以，而且因为记录了空节点的位置，所以凭一个先序或后序的结果就可以做到反序列化
+// 中序因为无法确定根节点的位置，实现不了
+type CodecRecursively struct {
+	globalValues []string
+}
+
+func ConstructorRecursively() CodecRecursively {
+	return CodecRecursively{}
+}
+
+func (this *CodecRecursively) serializeRecursively(root *TreeNode) string {
+	res := ""
+	var dfs func(node *TreeNode)
+	dfs = func(node *TreeNode) {
+		if node == nil {
+			res = res + "null,"
+			return
+		}
+		res = res + strconv.Itoa(node.Val) + ","
+		dfs(node.Left)
+		dfs(node.Right)
+	}
+	dfs(root)
+	return res[:len(res)-1]
+}
+
+// Deserializes your encoded data to tree.
+func (this *CodecRecursively) deserializeRecursively(data string) *TreeNode {
+	values := strings.Split(data, ",")
+	this.globalValues = values
+	return this.doDeserializeRecursively()
+}
+
+func (this *CodecRecursively) doDeserializeRecursively() *TreeNode {
+	if len(this.globalValues) == 0 {
+		return nil
+	}
+	first := this.globalValues[0]
+	this.globalValues = this.globalValues[1:] // 无论是不是null，都要去掉已处理的值
+	if first == "null" {
+		return nil
+	}
+	val, _ := strconv.Atoi(first)
+	node := &TreeNode{Val: val}
+	node.Left = this.doDeserializeRecursively()
+	node.Right = this.doDeserializeRecursively()
+	return node
+}

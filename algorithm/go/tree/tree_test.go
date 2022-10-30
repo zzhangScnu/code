@@ -101,3 +101,11 @@ func TestSerializeAndDeserialize(t *testing.T) {
 	res := c.serialize(root)
 	Validate(res, str, t)
 }
+
+func TestSerializeAndDeserializeRecursively(t *testing.T) {
+	str := "1,2,null,4,null,null,3,null,null"
+	c := ConstructorRecursively()
+	root := c.deserializeRecursively(str)
+	res := c.serializeRecursively(root)
+	Validate(res, str, t)
+}
