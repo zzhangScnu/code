@@ -45,27 +45,32 @@ import . "algorithm.com/structure"
 //
 // Related Topics 树 深度优先搜索 哈希表 二叉树
 
-var mapping map[int][]*TreeNode
-
 func findDuplicateSubtrees(root *TreeNode) []*TreeNode {
-	mapping = make(map[int][]*TreeNode, 5000)
+	mapping := make(map[int][]*TreeNode, 400)
 	var res []*TreeNode
 	var dfs func(node *TreeNode)
 	dfs = func(node *TreeNode) {
 		if node == nil {
 			return
 		}
+		eqFlag := false
 		val := node.Val
 		candidates := mapping[val]
 		for i, candidate := range candidates {
 			if equals(candidate, node) {
-				candidates = append(candidates[:i], candidates[i:]...)
+				candidates = append(candidates[:i], candidates[i+1:]...)
 				mapping[val] = candidates
-				return
+				res = append(res, node)
+				eqFlag = true
+				break
 			}
 		}
-		candidates = append(candidates, node)
-		mapping[val] = candidates
+		if !eqFlag {
+			candidates = append(candidates, node)
+			mapping[val] = candidates
+		}
+		dfs(node.Left)
+		dfs(node.Right)
 	}
 	dfs(root)
 	return res
@@ -78,7 +83,7 @@ func equals(p, q *TreeNode) bool {
 	if p == nil || q == nil {
 		return false
 	}
-	return p == q &&
+	return p.Val == q.Val &&
 		equals(p.Left, q.Left) &&
 		equals(p.Right, q.Right)
 }
