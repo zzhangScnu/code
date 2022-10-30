@@ -119,7 +119,7 @@ func TestSerializeAndDeserializePostOrderRecursively(t *testing.T) {
 }
 
 func TestFindDuplicateSubtrees(t *testing.T) {
-	str := "1,2,3,4,null,2,4,null,null,4,null,null,null"
+	str := "1,2,3,4,null,2,4,null,null,4,null,null,null" // "0,0,0,0,null,null,0,0,0,0,0"
 	c := Constructor()
 	root := c.deserialize(str)
 	subtrees := findDuplicateSubtrees(root)
