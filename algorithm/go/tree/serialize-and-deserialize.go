@@ -180,3 +180,52 @@ func (this *CodecRecursively) doDeserializeRecursively() *TreeNode {
 	node.Right = this.doDeserializeRecursively()
 	return node
 }
+
+type CodecPostOrderRecursively struct {
+	globalValues []string
+}
+
+func ConstructorPostOrderRecursively() CodecRecursively {
+	return CodecRecursively{}
+}
+
+func (this *CodecRecursively) serializePostOrderRecursively(root *TreeNode) string {
+	res := ""
+	var dfs func(node *TreeNode)
+	dfs = func(node *TreeNode) {
+		if node == nil {
+			res = res + "null,"
+			return
+		}
+		dfs(node.Left)
+		dfs(node.Right)
+		res = res + strconv.Itoa(node.Val) + ","
+	}
+	dfs(root)
+	return res[:len(res)-1]
+}
+
+// Deserializes your encoded data to tree.
+func (this *CodecRecursively) deserializePostOrderRecursively(data string) *TreeNode {
+	values := strings.Split(data, ",")
+	this.globalValues = values
+	return this.doDeserializePostOrderRecursively()
+}
+
+func (this *CodecRecursively) doDeserializePostOrderRecursively() *TreeNode {
+	if len(this.globalValues) == 0 {
+		return nil
+	}
+	lastIdx := len(this.globalValues) - 1
+	last := this.globalValues[lastIdx]
+	this.globalValues = this.globalValues[:lastIdx] // 无论是不是null，都要去掉已处理的值
+	if last == "null" {
+		return nil
+	}
+	val, _ := strconv.Atoi(last)
+	node := &TreeNode{Val: val}
+	// 遍历顺序是从后往前的，所以要先构造右子树
+	node.Right = this.doDeserializePostOrderRecursively()
+	node.Left = this.doDeserializePostOrderRecursively()
+	return node
+}

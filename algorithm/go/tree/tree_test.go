@@ -109,3 +109,11 @@ func TestSerializeAndDeserializeRecursively(t *testing.T) {
 	res := c.serializeRecursively(root)
 	Validate(res, str, t)
 }
+
+func TestSerializeAndDeserializePostOrderRecursively(t *testing.T) {
+	str := "null,null,null,4,2,null,null,3,1"
+	c := ConstructorPostOrderRecursively()
+	root := c.deserializePostOrderRecursively(str)
+	res := c.serializePostOrderRecursively(root)
+	Validate(res, str, t)
+}
