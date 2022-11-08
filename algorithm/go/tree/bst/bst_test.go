@@ -17,3 +17,12 @@ func TestGetMinimumDifference(t *testing.T) {
 	res := getMinimumDifference(root)
 	Validate(res, 1, t)
 }
+
+func TestMaxSumBST(t *testing.T) {
+	root := BuildRoot([]string{"4", "3", "null", "1", "2"})
+	res := maxSumBST(root)
+	Validate(res, 2, t)
+	root = BuildRoot([]string{"-4", "-2", "-5"})
+	res = maxSumBST(root)
+	Validate(res, 0, t)
+}
