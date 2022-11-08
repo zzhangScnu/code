@@ -125,3 +125,43 @@ func TestFindDuplicateSubtrees(t *testing.T) {
 	subtrees := findDuplicateSubtrees(root)
 	Validate(len(subtrees), 2, t)
 }
+
+func TestDFS(t *testing.T) {
+	root := BuildNaryRoot([]string{"1", "null", "3", "2", "4", "null", "5", "6"})
+	traverse(root)
+}
+
+func TestBacktrack(t *testing.T) {
+	root := BuildNaryRoot([]string{"1", "null", "3", "2", "4", "null", "5", "6"})
+	backtrack(root)
+}
+
+// DFS 算法，关注点在节点
+func traverse(root *Node) {
+	if root == nil {
+		return
+	}
+	fmt.Printf("进入节点 %+v\n", root)
+	for _, child := range root.Children {
+		// 若是在for里面做动作，会漏掉父节点
+		// fmt.Printf("进入节点 %+v\n", child)
+		traverse(child)
+		// fmt.Printf("离开节点 %+v\n", child)
+	}
+	fmt.Printf("离开节点 %+v\n", root)
+}
+
+// 回溯算法，关注点在树枝
+func backtrack(root *Node) {
+	if root == nil {
+		return
+	}
+	// 关键在于，在本层向前（子树）能做的选择。而向后（父节点）的树枝已经在身后了，是历史做过的选择，所以不需要遍历到
+	for _, child := range root.Children {
+		// 做选择
+		fmt.Printf("从 %+v 到 %+v\n", root, child)
+		backtrack(child)
+		// 撤销选择
+		fmt.Printf("从 %+v 到 %+v\n", child, root)
+	}
+}
