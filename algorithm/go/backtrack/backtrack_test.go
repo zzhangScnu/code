@@ -13,6 +13,7 @@ func TestPermute(t *testing.T) {
 	Validate(len(res), 6, t)
 }
 
+// 子集
 func TestSubsets(t *testing.T) {
 	res := subsets([]int{1, 2, 3})
 	Validate(len(res), 8, t)
@@ -25,4 +26,11 @@ func TestPermuteUnique(t *testing.T) {
 	res := permuteUnique([]int{1, 1, 2})
 	fmt.Println(res)
 	Validate(len(res), 3, t)
+}
+
+// 子集
+func TestSubsetsWithDup(t *testing.T) {
+	res := subsetsWithDup([]int{1, 2, 2})
+	Validate(len(res), 6, t)
+	fmt.Println(res)
 }
