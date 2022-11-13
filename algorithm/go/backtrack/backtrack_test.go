@@ -27,6 +27,13 @@ func TestCombine(t *testing.T) {
 	fmt.Println(res)
 }
 
+// 组合
+func TestCombinationSumIII(t *testing.T) {
+	res := combinationSum3(3, 9)
+	Validate(len(res), 3, t)
+	fmt.Println(res)
+}
+
 // 候选集有重复，不可重复选
 // 全排列
 func TestPermuteUnique(t *testing.T) {
@@ -43,7 +50,7 @@ func TestSubsetsWithDup(t *testing.T) {
 }
 
 // 组合
-func TestCombinationSum2(t *testing.T) {
+func TestCombinationSumII(t *testing.T) {
 	res := combinationSum2([]int{10, 1, 2, 7, 6, 1, 5}, 8)
 	Validate(len(res), 4, t)
 	fmt.Println(res)
