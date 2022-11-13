@@ -20,6 +20,13 @@ func TestSubsets(t *testing.T) {
 	fmt.Println(res)
 }
 
+// 组合
+func TestCombine(t *testing.T) {
+	res := combine(4, 2)
+	Validate(len(res), 6, t)
+	fmt.Println(res)
+}
+
 // 候选集有重复，不可重复选
 // 全排列
 func TestPermuteUnique(t *testing.T) {
