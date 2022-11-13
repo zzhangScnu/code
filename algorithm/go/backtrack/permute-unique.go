@@ -50,9 +50,11 @@ func permuteUnique(nums []int) [][]int {
 			res = append(res, append([]int{}, track...))
 			return
 		}
-		preNum := EmptyNum // 在每一层，需要记录从左到右生成树枝的值，如果重复了就咔嚓
+		preNum := EmptyNum // 在每一层先初始化。需要在每层记录从左到右生成树枝的值，如果重复了就咔嚓
 		// 因为如果有树枝重复，下面生成的全排列子树必然也是会重复的，所以不需要考虑了
 		for i := 0; i < len(nums); i++ {
+			// if used[i] == true || i != 0 && nums[i] == nums[i-1] { 不可以这样判断，否则1，2，2`这种组合就无法生成了
+			// 因为nums不只是给同一层用的，会在整个纵深都用到
 			if used[i] == true || nums[i] == preNum {
 				continue
 			}
