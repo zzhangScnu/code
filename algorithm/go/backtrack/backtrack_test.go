@@ -42,6 +42,13 @@ func TestSubsetsWithDup(t *testing.T) {
 	fmt.Println(res)
 }
 
+// 组合
+func TestCombinationSum2(t *testing.T) {
+	res := combinationSum2([]int{10, 1, 2, 7, 6, 1, 5}, 8)
+	Validate(len(res), 4, t)
+	fmt.Println(res)
+}
+
 // 候选集无重复，可重复选
 func TestCombinationSum(t *testing.T) {
 	res := combinationSum([]int{2, 3, 6, 7}, 7)
