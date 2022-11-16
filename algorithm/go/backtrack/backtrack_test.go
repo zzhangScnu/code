@@ -68,3 +68,9 @@ func TestCombinationSumIV(t *testing.T) {
 	//Validate(res, 7, t)
 	fmt.Println(res)
 }
+
+// 其他回溯
+func TestLetterCombinations(t *testing.T) {
+	res := letterCombinations("23")
+	fmt.Println(res)
+}
