@@ -62,3 +62,9 @@ func TestCombinationSum(t *testing.T) {
 	Validate(len(res), 2, t)
 	fmt.Println(res)
 }
+
+func TestCombinationSumIV(t *testing.T) {
+	res := combinationSum4([]int{4, 2, 1}, 32)
+	//Validate(res, 7, t)
+	fmt.Println(res)
+}
