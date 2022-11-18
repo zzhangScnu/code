@@ -51,7 +51,7 @@ package backtrack
 //	'9': {"w", "x", "y", "z"},
 //}
 
-var list = [][]string{{}, {}, {"a", "b", "c"}, {"d", "e", "f"}, {"g", "h", "i"}, {"j", "k", "l"}, {"m", "n", "o"},
+var candidatesList = [][]string{{}, {}, {"a", "b", "c"}, {"d", "e", "f"}, {"g", "h", "i"}, {"j", "k", "l"}, {"m", "n", "o"},
 	{"p", "q", "r", "s"}, {"t", "u", "v"}, {"w", "x", "y", "z"}}
 
 func letterCombinations(digits string) []string {
@@ -68,7 +68,7 @@ func letterCombinations(digits string) []string {
 			return
 		}
 		for digitIdx := start; digitIdx < size; digitIdx++ { // 回溯树里面，这个是节点。只是需要再把节点从数字展开成具体的字母
-			candidates := list[digits[digitIdx]-'0'] // rune(ascii编码)转数字
+			candidates := candidatesList[digits[digitIdx]-'0'] // rune(ascii编码)转数字
 			for _, candidate := range candidates {
 				track += candidate
 				dfs(digitIdx + 1)
