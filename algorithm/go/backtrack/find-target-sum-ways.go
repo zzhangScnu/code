@@ -1,5 +1,7 @@
 package backtrack
 
+import "fmt"
+
 //给你一个整数数组 nums 和一个整数 target 。
 //
 // 向数组中的每个整数前添加 '+' 或 '-' ，然后串联起所有整数，可以构造一个 表达式 ：
@@ -64,3 +66,31 @@ func findTargetSumWays(nums []int, target int) int {
 	dfs(0, 0)
 	return res
 }
+
+// dp + 备忘录消除重叠子问题
+func findTargetSumWaysDistinctly(nums []int, target int) int {
+	size := len(nums)
+	mapping := make(map[string]int, len(nums))
+	// 在idx层，当结果是trackSum时，子树中有多少种解法
+	var dfs func(idx int, trackSum int) int
+	dfs = func(idx int, trackSum int) int {
+		if idx == size {
+			if trackSum == target {
+				return 1
+			}
+			return 0
+		}
+		key := fmt.Sprintf("%v-%v", idx, trackSum)
+		if val, ok := mapping[key]; ok {
+			return val
+		}
+		// 站在某个节点上，结果等于子树的两条边的运算和
+		val := dfs(idx+1, trackSum+nums[idx]) + dfs(idx+1, trackSum-nums[idx])
+		mapping[key] = val
+		return val
+	}
+	// 不需要维护一个res，dp依赖子问题的解法（返回值）
+	return dfs(0, 0)
+}
+
+// todo：子集划分解法

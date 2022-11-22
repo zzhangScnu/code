@@ -85,3 +85,8 @@ func TestFindTargetSumWays(t *testing.T) {
 	res := findTargetSumWays([]int{1, 1, 1, 1, 1}, 3)
 	Validate(res, 5, t)
 }
+
+func TestFindTargetSumWaysDistinctly(t *testing.T) {
+	res := findTargetSumWaysDistinctly([]int{1, 1, 1, 1, 1}, 3)
+	Validate(res, 5, t)
+}
