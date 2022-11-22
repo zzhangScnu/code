@@ -80,3 +80,8 @@ func TestGenerateParenthesis(t *testing.T) {
 	Validate(len(res), 5, t)
 	fmt.Println(res)
 }
+
+func TestFindTargetSumWays(t *testing.T) {
+	res := findTargetSumWays([]int{1, 1, 1, 1, 1}, 3)
+	Validate(res, 5, t)
+}
