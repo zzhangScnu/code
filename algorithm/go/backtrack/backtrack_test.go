@@ -90,3 +90,12 @@ func TestFindTargetSumWaysDistinctly(t *testing.T) {
 	res := findTargetSumWaysDistinctly([]int{1, 1, 1, 1, 1}, 3)
 	Validate(res, 5, t)
 }
+
+func TestCanPartitionKSubsets(t *testing.T) {
+	res := canPartitionKSubsets([]int{4, 3, 2, 3, 5, 2, 1}, 4)
+	Validate(res, true, t)
+	res = canPartitionKSubsets([]int{1, 2, 3, 4}, 3)
+	Validate(res, false, t)
+	res = canPartitionKSubsets([]int{2, 2, 2, 2, 3, 4, 5}, 4)
+	Validate(res, false, t)
+}
