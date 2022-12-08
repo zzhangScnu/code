@@ -13,3 +13,13 @@ func TestNumIslands(t *testing.T) {
 		{'0', '0', '0', '0', '0'}}
 	Validate(numIslands(grid), 1, t)
 }
+
+func TestClosedIsland(t *testing.T) {
+	grid := [][]int{
+		{1, 1, 1, 1, 1, 1, 1, 0},
+		{1, 0, 0, 0, 0, 1, 1, 0},
+		{1, 0, 1, 0, 1, 1, 1, 0},
+		{1, 0, 0, 0, 0, 1, 0, 1},
+		{1, 1, 1, 1, 1, 1, 1, 0}}
+	Validate(closedIsland(grid), 2, t)
+}
