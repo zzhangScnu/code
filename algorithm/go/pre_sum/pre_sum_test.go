@@ -24,3 +24,8 @@ func TestGetProduct(t *testing.T) {
 	productOfNumbers.Add(8)                     // [3,0,2,5,4,8]
 	fmt.Println(productOfNumbers.GetProduct(2)) // 返回 32 。最后 2 个数字的乘积是 4 * 8 = 32
 }
+
+func TestPivotIndex(t *testing.T) {
+	Validate(pivotIndex([]int{2, 1, -1}), 0, t)
+	Validate(pivotIndex([]int{1, -1, 2}), 2, t)
+}
