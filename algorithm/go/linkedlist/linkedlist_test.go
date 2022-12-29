@@ -59,3 +59,10 @@ func TestIsPalindrome(t *testing.T) {
 	param := &ListNode{Val: 1, Next: &ListNode{Val: 2, Next: &ListNode{Val: 2, Next: &ListNode{Val: 1, Next: nil}}}}
 	Validate(isPalindrome2(param), true, t)
 }
+
+func TestMergeTwoLists(t *testing.T) {
+	list1 := &ListNode{Val: -9, Next: &ListNode{Val: 3, Next: nil}}
+	list2 := &ListNode{Val: 5, Next: &ListNode{Val: 7, Next: nil}}
+	res := mergeTwoLists(list1, list2)
+	fmt.Println(res)
+}
