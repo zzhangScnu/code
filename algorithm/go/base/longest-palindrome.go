@@ -39,7 +39,7 @@ package base
 // Related Topics 贪心 哈希表 字符串
 
 func longestPalindrome(s string) int {
-	mapping := make(map[rune]int, len(s))
+	mapping := make(map[rune]int, len(s)) // 直接用rune[]会更好
 	for _, si := range s {
 		mapping[si] += 1
 	}
@@ -56,4 +56,20 @@ func longestPalindrome(s string) int {
 		}
 	}
 	return length
+}
+
+func longestPalindromeForBest(s string) int {
+	res := 0
+	counter := make([]int, 128) // 大写+小写
+	for _, si := range s {
+		counter[si]++
+		if counter[si]%2 == 0 {
+			res += counter[si]
+			counter[si] = 0
+		}
+	}
+	if res < len(s) {
+		res++
+	}
+	return res
 }

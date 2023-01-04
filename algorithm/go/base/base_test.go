@@ -36,7 +36,7 @@ func TestLongestCommonPrefix(t *testing.T) {
 }
 
 func TestLongestPalindrome(t *testing.T) {
-	Validate(longestPalindrome("abccccdd"), 7, t)
-	Validate(longestPalindrome("ccc"), 3, t)
-	Validate(longestPalindrome("cccbb"), 5, t)
+	Validate(longestPalindromeForBest("abccccdd"), 7, t)
+	Validate(longestPalindromeForBest("ccc"), 3, t)
+	Validate(longestPalindromeForBest("cccbb"), 5, t)
 }
