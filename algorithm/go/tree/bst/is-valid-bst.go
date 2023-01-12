@@ -54,3 +54,34 @@ func validateBST(root *TreeNode, min *TreeNode, max *TreeNode) bool {
 		validateBST(root.Left, min, root) &&
 		validateBST(root.Right, root, max)
 }
+
+func isValidBST2(root *TreeNode) bool {
+	flag, _, _ := validate(root)
+	return flag
+}
+
+// 返回值：是否二叉搜索树，最小值，最大值
+func validate(p *TreeNode) (bool, *TreeNode, *TreeNode) {
+	if p == nil {
+		return true, nil, nil
+	}
+	leftFlag, leftMin, leftMax := validate(p.Left)
+	rightFlag, rightMin, rightMax := validate(p.Right)
+	if !leftFlag || !rightFlag {
+		return false, nil, nil
+	}
+	if leftMax != nil && leftMax.Val >= p.Val {
+		return false, nil, nil
+	}
+	if rightMin != nil && rightMin.Val <= p.Val {
+		return false, nil, nil
+	}
+	// 当p是叶子节点时
+	if leftMin == nil {
+		leftMin = p
+	}
+	if rightMax == nil {
+		rightMax = p
+	}
+	return true, leftMin, rightMax
+}
